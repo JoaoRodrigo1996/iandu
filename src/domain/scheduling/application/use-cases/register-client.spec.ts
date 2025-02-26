@@ -1,4 +1,4 @@
-import { InMemoryClientsRepository } from './in-memory-clients-repository'
+import { InMemoryClientsRepository } from '../../../../../test/repositories/in-memory-clients-repository'
 import { RegisterClient } from './register-client'
 
 let inMemoryClientsRepository: InMemoryClientsRepository

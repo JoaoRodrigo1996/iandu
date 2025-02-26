@@ -1,5 +1,5 @@
-import type { Client } from './client'
-import type { ClientsRepository } from './clients-repository'
+import type { ClientsRepository } from '../../src/domain/scheduling/application/repositories/clients-repository'
+import type { Client } from '../../src/domain/scheduling/enterprise/entities/client'
 
 export class InMemoryClientsRepository implements ClientsRepository {
   public items: Client[] = []

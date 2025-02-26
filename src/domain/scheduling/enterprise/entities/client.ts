@@ -1,5 +1,5 @@
-import { Entity } from './entity'
-import type { UniqueEntityID } from './unique-entity-id'
+import { Entity } from '../../../../core/entities/entity'
+import type { UniqueEntityID } from '../../../../core/entities/unique-entity-id'
 
 interface ClientProps {
   name: string

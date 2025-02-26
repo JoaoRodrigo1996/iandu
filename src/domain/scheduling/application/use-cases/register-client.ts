@@ -1,7 +1,7 @@
-import { Client } from './client'
-import { ClientAlreadyExistsError } from './client-already-exists-error'
-import type { ClientsRepository } from './clients-repository'
-import { type Either, left, right } from './either'
+import { type Either, left, right } from '../../../../core/either'
+import { Client } from '../../enterprise/entities/client'
+import type { ClientsRepository } from '../repositories/clients-repository'
+import { ClientAlreadyExistsError } from './errors/client-already-exists-error'
 
 interface RegisterClientRequest {
   name: string
