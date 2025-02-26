@@ -1,5 +1,6 @@
 import { type Either, left, right } from '../../../../core/either'
 import { Client } from '../../enterprise/entities/client'
+import type { HashGenerator } from '../cryptography/hash-generator'
 import type { ClientsRepository } from '../repositories/clients-repository'
 import { ClientAlreadyExistsError } from './errors/client-already-exists-error'
 
@@ -17,7 +18,10 @@ type RegisterClientResponse = Either<
 >
 
 export class RegisterClient {
-  constructor(private clientsRepository: ClientsRepository) {}
+  constructor(
+    private clientsRepository: ClientsRepository,
+    private hashGenerator: HashGenerator
+  ) {}
 
   async execute({
     name,
@@ -30,7 +34,9 @@ export class RegisterClient {
       return left(new ClientAlreadyExistsError(email))
     }
 
-    const client = Client.create({ name, email, password })
+    const hashedPassword = await this.hashGenerator.hash(password)
+
+    const client = Client.create({ name, email, password: hashedPassword })
 
     await this.clientsRepository.create(client)
 
