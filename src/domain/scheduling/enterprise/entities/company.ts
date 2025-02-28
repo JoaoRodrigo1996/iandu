@@ -3,7 +3,7 @@ import { Entity } from '../../../../core/entities/entity'
 import type { UniqueEntityID } from '../../../../core/entities/unique-entity-id'
 
 interface CompanyProps {
-  ownerId: string
+  ownerId: UniqueEntityID
   name: string
   cnpj: string
   address: {

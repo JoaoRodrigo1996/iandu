@@ -1,4 +1,5 @@
 import { type Either, left, right } from '../../../../core/either'
+import { UniqueEntityID } from '../../../../core/entities/unique-entity-id'
 import { Company } from '../../enterprise/entities/company'
 import type { CompaniesRepository } from '../repositories/companies-repository'
 import { CompanyAlreadyExistsError } from './errors/company-already-exists-error'
@@ -52,7 +53,7 @@ export class RegisterCompany {
     }
 
     const company = Company.create({
-      ownerId,
+      ownerId: new UniqueEntityID(ownerId),
       name,
       cnpj,
       address: { street, number, complement, neighborhood, city, state, zip },

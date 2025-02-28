@@ -3,8 +3,8 @@ import { Entity } from '../../../../core/entities/entity'
 import type { UniqueEntityID } from '../../../../core/entities/unique-entity-id'
 
 interface AgendaProps {
-  companyId: string
-  clientId: string
+  companyId: UniqueEntityID
+  clientId: UniqueEntityID
   startTime: Date
   endTime: Date
   createdAt: Date

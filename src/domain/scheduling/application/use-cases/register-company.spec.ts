@@ -4,13 +4,13 @@ import { RegisterCompany } from './register-company'
 let inMemoryCompaniesRepository: InMemoryCompaniesRepository
 let sut: RegisterCompany
 
-describe('Register new client', () => {
+describe('Register new company', () => {
   beforeEach(() => {
     inMemoryCompaniesRepository = new InMemoryCompaniesRepository()
     sut = new RegisterCompany(inMemoryCompaniesRepository)
   })
 
-  it('should be able to register a new client', async () => {
+  it('should be able to register a new company', async () => {
     const result = await sut.execute({
       ownerId: '1',
       name: 'John Doe',
