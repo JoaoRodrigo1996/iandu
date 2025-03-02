@@ -1,12 +1,12 @@
-import { InMemoryAgendasRepository } from 'test/repositories/in-memory-agendas-repository'
+import { InMemorySchedulingsRepository } from 'test/repositories/in-memory-schedulings-repository'
 import { RegisterScheduling } from './register-scheduling'
 
-let inMemoryAgendasRepository: InMemoryAgendasRepository
+let inMemoryAgendasRepository: InMemorySchedulingsRepository
 let sut: RegisterScheduling
 
 describe('Register new schedule', () => {
   beforeEach(() => {
-    inMemoryAgendasRepository = new InMemoryAgendasRepository()
+    inMemoryAgendasRepository = new InMemorySchedulingsRepository()
     sut = new RegisterScheduling(inMemoryAgendasRepository)
   })
 

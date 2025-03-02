@@ -2,7 +2,7 @@ import type { Optional } from '@/core/types/optional'
 import { Entity } from '../../../../core/entities/entity'
 import type { UniqueEntityID } from '../../../../core/entities/unique-entity-id'
 
-interface AgendaProps {
+export interface SchedulingProps {
   companyId: UniqueEntityID
   clientId: UniqueEntityID
   startTime: Date
@@ -11,7 +11,7 @@ interface AgendaProps {
   updatedAt?: Date
 }
 
-export class Agenda extends Entity<AgendaProps> {
+export class Scheduling extends Entity<SchedulingProps> {
   get companyId() {
     return this.props.companyId
   }
@@ -43,17 +43,17 @@ export class Agenda extends Entity<AgendaProps> {
   }
 
   static create(
-    props: Optional<AgendaProps, 'createdAt'>,
+    props: Optional<SchedulingProps, 'createdAt'>,
     id?: UniqueEntityID
   ) {
-    const agenda = new Agenda(
+    const scheduling = new Scheduling(
       {
         ...props,
-        createdAt: new Date(),
+        createdAt: props.createdAt ?? new Date(),
       },
       id
     )
 
-    return agenda
+    return scheduling
   }
 }

@@ -1,7 +1,7 @@
 import { type Either, right } from '../../../../core/either'
 import { UniqueEntityID } from '../../../../core/entities/unique-entity-id'
-import { Agenda } from '../../enterprise/entities/agenda'
-import type { AgendasRepository } from '../repositories/agendasRepository'
+import { Scheduling } from '../../enterprise/entities/scheduling'
+import type { SchedulingsRepository } from '../repositories/schedulingsRepository'
 
 interface RegisterSchedulingRequest {
   companyId: string
@@ -14,12 +14,12 @@ interface RegisterSchedulingRequest {
 type RegisterSchedulingResponse = Either<
   null,
   {
-    schedule: Agenda
+    schedule: Scheduling
   }
 >
 
 export class RegisterScheduling {
-  constructor(private agendasRepository: AgendasRepository) {}
+  constructor(private agendasRepository: SchedulingsRepository) {}
 
   async execute({
     companyId,
@@ -28,7 +28,7 @@ export class RegisterScheduling {
     endTime,
     createdAt,
   }: RegisterSchedulingRequest): Promise<RegisterSchedulingResponse> {
-    const schedule = Agenda.create({
+    const schedule = Scheduling.create({
       clientId: new UniqueEntityID(clientId),
       companyId: new UniqueEntityID(companyId),
       startTime,
