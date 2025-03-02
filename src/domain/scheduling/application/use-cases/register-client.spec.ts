@@ -1,6 +1,7 @@
 import { FakeHasher } from 'test/cryptography/fake-hasher'
+import { makeClient } from 'test/factories/make-client'
 import { InMemoryClientsRepository } from '../../../../../test/repositories/in-memory-clients-repository'
-import type { HashGenerator } from '../cryptography/hash-generator'
+import { ClientAlreadyExistsError } from './errors/client-already-exists-error'
 import { RegisterClient } from './register-client'
 
 let inMemoryClientsRepository: InMemoryClientsRepository
@@ -40,5 +41,27 @@ describe('Register new client', () => {
 
     expect(result.isRight()).toBe(true)
     expect(inMemoryClientsRepository.items[0].password).toEqual(hashedPassword)
+  })
+
+  it("shouldn't be able to register a new client with an already used email", async () => {
+    const email = 'johndoe@example.com'
+
+    await sut.execute({
+      name: 'John Doe',
+      userName: 'johndoe',
+      email: email,
+      password: '123456',
+    })
+
+    const result = await sut.execute({
+      name: 'John Doe',
+      userName: 'johndoe',
+      email: email,
+      password: '123456',
+    })
+
+    console.log(result)
+
+    expect(result.value).toBeInstanceOf(ClientAlreadyExistsError)
   })
 })
