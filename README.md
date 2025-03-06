@@ -10,7 +10,7 @@ Cal.com style app.
 - [ ] Deve ser possível obter o perfil de um usuário logado;
 - [x] Deve ser possível buscar um usuário pelo nome de usuário;
 - [x] Deve ser possível o usuário fazer um agendamento com uma organização;
-- [ ] Deve ser possível o usuário obter o seu histórico de agendamentos;
+- [x] Deve ser possível o usuário obter o seu histórico de agendamentos;
 - [ ] Deve ser possível o usuário buscar organizações pelo nome;
 - [ ] Deve ser possível o usuário realizar avaliações da organização;
 

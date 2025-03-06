@@ -2,7 +2,7 @@ import type { Optional } from '@/core/types/optional'
 import { Entity } from '../../../../core/entities/entity'
 import type { UniqueEntityID } from '../../../../core/entities/unique-entity-id'
 
-interface CompanyProps {
+export interface CompanyProps {
   ownerId: UniqueEntityID
   name: string
   cnpj: string
