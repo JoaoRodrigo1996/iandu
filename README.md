@@ -11,14 +11,13 @@ Cal.com style app.
 - [x] Deve ser possível buscar um usuário pelo nome de usuário;
 - [x] Deve ser possível o usuário fazer um agendamento com uma organização;
 - [x] Deve ser possível o usuário obter o seu histórico de agendamentos;
-- [ ] Deve ser possível o usuário buscar organizações pelo nome;
-- [ ] Deve ser possível o usuário realizar avaliações da organização;
+- [x] Deve ser possível o usuário buscar organizações pelo nome;
 
 ## RNs (Regras de negócio)
 
 - [ ] O usuário não deve poder se cadastrar com um e-mail duplicado;
-- [ ] O usuário não pode fazer 2 agendamentos no mesmo dia em uma mesma organização;
-- [ ] A organizaçãp só pode ser cadastrada por usuário autenticados;
+- [ ] O usuário não pode fazer 2 agendamentos no mesmo dia em uma mesmo horário;
+- [ ] A organização só pode ser cadastrada por usuário autenticados;
 
 ## RNFs (Requisitos não-funcionais)
 
