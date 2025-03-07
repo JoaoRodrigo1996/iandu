@@ -5,7 +5,7 @@ import { GetClientByUserName } from './get-client-by-user-name'
 let inMemoryClientsRepository: InMemoryClientsRepository
 let sut: GetClientByUserName
 
-describe('Register new client', () => {
+describe('Get client by username', () => {
   beforeEach(() => {
     inMemoryClientsRepository = new InMemoryClientsRepository()
     sut = new GetClientByUserName(inMemoryClientsRepository)

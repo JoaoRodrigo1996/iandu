@@ -5,7 +5,7 @@ import { FetchCompanyByName } from './fetch-company-by-name'
 let inMemoryCompaniesRespository: InMemoryCompaniesRepository
 let sut: FetchCompanyByName
 
-describe('Fetch client scheduling history', () => {
+describe('Fetch company', () => {
   beforeEach(() => {
     inMemoryCompaniesRespository = new InMemoryCompaniesRepository()
     sut = new FetchCompanyByName(inMemoryCompaniesRespository)

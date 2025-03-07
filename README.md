@@ -5,7 +5,7 @@ Cal.com style app.
 ## RFs (Requisitos funcionais)
 
 - [x] Deve ser possível se cadastrar;
-- [ ] Deve ser possível se autenticar;
+- [x] Deve ser possível se autenticar;
 - [x] Deve ser possível o usuário cadastrar uma organização;
 - [ ] Deve ser possível obter o perfil de um usuário logado;
 - [x] Deve ser possível buscar um usuário pelo nome de usuário;

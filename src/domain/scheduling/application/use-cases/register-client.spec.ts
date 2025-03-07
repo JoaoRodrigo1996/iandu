@@ -60,8 +60,6 @@ describe('Register new client', () => {
       password: '123456',
     })
 
-    console.log(result)
-
     expect(result.value).toBeInstanceOf(ClientAlreadyExistsError)
   })
 })
