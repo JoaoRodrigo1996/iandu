@@ -6,8 +6,7 @@ import type { SchedulingsRepository } from '../repositories/schedulingsRepositor
 interface RegisterSchedulingRequest {
   companyId: string
   clientId: string
-  startTime: Date
-  endTime: Date
+  date: Date
   createdAt: Date
 }
 
@@ -24,15 +23,13 @@ export class RegisterScheduling {
   async execute({
     companyId,
     clientId,
-    startTime,
-    endTime,
+    date,
     createdAt,
   }: RegisterSchedulingRequest): Promise<RegisterSchedulingResponse> {
     const schedule = Scheduling.create({
       clientId: new UniqueEntityID(clientId),
       companyId: new UniqueEntityID(companyId),
-      startTime,
-      endTime,
+      date,
       createdAt,
     })
 

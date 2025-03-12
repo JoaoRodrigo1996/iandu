@@ -14,8 +14,7 @@ describe('Register new schedule', () => {
     const result = await sut.execute({
       clientId: '1',
       companyId: '1',
-      startTime: new Date('2022-01-01 13:00:00'),
-      endTime: new Date('2022-01-01 14:00:00'),
+      date: new Date('2022-01-01 13:00:00'),
       createdAt: new Date(),
     })
 

@@ -6,7 +6,7 @@ export interface AvailableProps {
   start_time_in_minutes: number
   end_time_in_minutes: number
 
-  company_id: string
+  company_id: UniqueEntityID
 }
 
 export class Available extends Entity<AvailableProps> {

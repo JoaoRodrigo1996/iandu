@@ -5,8 +5,7 @@ import type { UniqueEntityID } from '../../../../core/entities/unique-entity-id'
 export interface SchedulingProps {
   companyId: UniqueEntityID
   clientId: UniqueEntityID
-  startTime: Date
-  endTime: Date
+  date: Date
   createdAt: Date
   updatedAt?: Date
 }
@@ -20,21 +19,12 @@ export class Scheduling extends Entity<SchedulingProps> {
     return this.props.clientId
   }
 
-  get startTime() {
-    return this.props.startTime
+  get date() {
+    return this.props.date
   }
 
-  set startTime(startTime: Date) {
-    this.props.startTime = startTime
-    this.touch()
-  }
-
-  get endTime() {
-    return this.props.endTime
-  }
-
-  set endTime(endTime: Date) {
-    this.props.endTime = endTime
+  set date(date: Date) {
+    this.props.date = date
     this.touch()
   }
 
