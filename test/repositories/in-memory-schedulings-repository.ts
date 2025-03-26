@@ -25,4 +25,12 @@ export class InMemorySchedulingsRepository implements SchedulingsRepository {
 
     return history
   }
+
+  async cancel(scheduling: Scheduling): Promise<void> {
+    const schedule = this.items.findIndex(
+      item => item.clientId === scheduling.id
+    )
+
+    this.items.splice(schedule, 1)
+  }
 }

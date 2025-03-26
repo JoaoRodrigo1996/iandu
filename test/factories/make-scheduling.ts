@@ -13,8 +13,7 @@ export function makeScheduling(
     {
       clientId: new UniqueEntityID(),
       companyId: new UniqueEntityID(),
-      startTime: faker.date.anytime(),
-      endTime: faker.date.anytime(),
+      date: new Date(),
       ...override,
     },
     id

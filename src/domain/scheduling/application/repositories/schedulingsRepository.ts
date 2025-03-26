@@ -4,4 +4,5 @@ export abstract class SchedulingsRepository {
   abstract create(agenda: Scheduling): Promise<void>
   abstract findById(id: string): Promise<Scheduling | null>
   abstract findByClientId(clientId: string): Promise<Scheduling[]>
+  abstract cancel(scheduling: Scheduling): Promise<void>
 }
