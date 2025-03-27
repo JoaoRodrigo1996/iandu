@@ -6,6 +6,7 @@ export interface ClientProps {
   userName: string
   email: string
   password: string
+  updatedAt?: Date
 }
 
 export class Client extends Entity<ClientProps> {
@@ -13,16 +14,35 @@ export class Client extends Entity<ClientProps> {
     return this.props.name
   }
 
+  set name(name: string) {
+    this.props.name = name
+    this.touch()
+  }
+
   get userName() {
     return this.props.userName
+  }
+
+  set userName(userName: string) {
+    this.props.userName = userName
+    this.touch()
   }
 
   get email() {
     return this.props.email
   }
 
+  set email(email: string) {
+    this.props.email = email
+    this.touch()
+  }
+
   get password() {
     return this.props.password
+  }
+
+  private touch() {
+    this.props.updatedAt = new Date()
   }
 
   static create(props: ClientProps, id?: UniqueEntityID) {

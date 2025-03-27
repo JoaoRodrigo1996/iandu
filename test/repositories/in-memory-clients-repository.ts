@@ -37,4 +37,10 @@ export class InMemoryClientsRepository implements ClientsRepository {
 
     return client
   }
+
+  async update(client: Client): Promise<void> {
+    const index = this.items.findIndex(item => item.id === client.id)
+
+    this.items[index] = client
+  }
 }

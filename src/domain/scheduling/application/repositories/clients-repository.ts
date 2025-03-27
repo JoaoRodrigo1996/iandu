@@ -5,4 +5,5 @@ export abstract class ClientsRepository {
   abstract findById(clientId: string): Promise<Client | null>
   abstract findByEmail(email: string): Promise<Client | null>
   abstract findByUserName(userName: string): Promise<Client | null>
+  abstract update(client: Client): Promise<void>
 }

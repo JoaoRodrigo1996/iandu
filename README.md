@@ -10,7 +10,7 @@
 - [x] Deve ser possível o usuário obter o seu histórico de agendamentos;
 - [x] Deve ser possível o usuário buscar organizações pelo nome;
 - [x] Deve ser possível obter o perfil de um usuário logado;
-- [] Deve ser possível cancelar um agendamento antes de um determinado prazo.
+- [x] Deve ser possível cancelar um agendamento antes de um determinado prazo.
 - [] Deve ser possível a organização definir horários de funcionamento.
 - [] Deve ser possível a organização gerenciar seus agendamentos (aceitar, recusar ou cancelar).
 - [] Deve ser possível enviar notificações por e-mail ou SMS sobre agendamentos e cancelamentos.
