@@ -1,7 +1,8 @@
-import { type Either, right } from '../../../../core/either'
+import { type Either, left, right } from '../../../../core/either'
 import { UniqueEntityID } from '../../../../core/entities/unique-entity-id'
 import { Scheduling } from '../../enterprise/entities/scheduling'
 import type { SchedulingsRepository } from '../repositories/schedulingsRepository'
+import { ScheduleAlreadyExistsError } from './errors/schedule-already-exists-error'
 
 interface RegisterSchedulingRequest {
   companyId: string
@@ -11,14 +12,14 @@ interface RegisterSchedulingRequest {
 }
 
 type RegisterSchedulingResponse = Either<
-  null,
+  ScheduleAlreadyExistsError,
   {
     schedule: Scheduling
   }
 >
 
 export class RegisterScheduling {
-  constructor(private agendasRepository: SchedulingsRepository) {}
+  constructor(private schedulesRepository: SchedulingsRepository) {}
 
   async execute({
     companyId,
@@ -33,7 +34,17 @@ export class RegisterScheduling {
       createdAt,
     })
 
-    await this.agendasRepository.create(schedule)
+    const scheduleAlreadyExists =
+      await this.schedulesRepository.findByClientIdAndDate(
+        clientId,
+        schedule.date
+      )
+
+    if (scheduleAlreadyExists) {
+      return left(new ScheduleAlreadyExistsError(schedule.id.toString()))
+    }
+
+    await this.schedulesRepository.create(schedule)
 
     return right({ schedule })
   }

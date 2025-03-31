@@ -11,11 +11,10 @@
 - [x] Deve ser possível o usuário buscar organizações pelo nome;
 - [x] Deve ser possível obter o perfil de um usuário logado;
 - [x] Deve ser possível cancelar um agendamento antes de um determinado prazo.
-- [] Deve ser possível a organização definir horários de funcionamento.
-- [] Deve ser possível a organização gerenciar seus agendamentos (aceitar, recusar ou cancelar).
-- [] Deve ser possível enviar notificações por e-mail ou SMS sobre agendamentos e cancelamentos.
-- [] Deve ser possível um usuário editar seu perfil (nome, senha, foto, etc.).
-- [] Deve ser possível que um usuário visualize a disponibilidade de horários de uma organização antes de agendar.
+- [x] Deve ser possível a organização definir horários de funcionamento.
+- [x] Deve ser possível um usuário editar seu perfil (nome, senha, foto, etc.).
+- [ ] Deve ser possível a organização gerenciar seus agendamentos (aceitar, recusar ou cancelar).
+- [ ] Deve ser possível enviar notificações por e-mail ou SMS sobre agendamentos e cancelamentos.
 
 ## RNs (Regras de negócio)
 

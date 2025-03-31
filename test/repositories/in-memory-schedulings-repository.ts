@@ -33,4 +33,19 @@ export class InMemorySchedulingsRepository implements SchedulingsRepository {
 
     this.items.splice(schedule, 1)
   }
+
+  async findByClientIdAndDate(
+    clientId: string,
+    date: Date
+  ): Promise<Scheduling | null> {
+    const schedule = this.items.find(
+      item => item.clientId.toString() === clientId && item.date === date
+    )
+
+    if (!schedule) {
+      return null
+    }
+
+    return schedule
+  }
 }
