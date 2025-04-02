@@ -6,6 +6,7 @@ export interface SchedulingProps {
   companyId: UniqueEntityID
   clientId: UniqueEntityID
   date: Date
+  canceledAt?: Date
   createdAt: Date
   updatedAt?: Date
 }

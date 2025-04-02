@@ -20,8 +20,8 @@
 
 - [x] O usuário não deve poder se cadastrar com um e-mail duplicado;
 - [x] A organização só pode ser cadastrada por usuário autenticados;
-- [ ] O usuário não pode fazer 2 agendamentos no mesmo dia em uma mesmo horário;
-- [ ] O cancelamento de um agendamento deve ter um prazo limite antes do horário marcado.
+- [x] O usuário não pode fazer 2 agendamentos no mesmo dia em uma mesmo horário;
+- [x] O cancelamento de um agendamento deve ter um prazo limite antes do horário marcado.
 - [ ] A organização pode definir regras para agendamentos, como tempo mínimo de antecedência.
 - [ ] O usuário só pode cancelar um agendamento no máximo X vezes dentro de um período para evitar abusos.
 - [ ] O administrador da organização pode adicionar e gerenciar outros usuários (funcionários, por exemplo).
