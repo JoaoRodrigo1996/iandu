@@ -13,14 +13,14 @@ describe('Register available time', () => {
 
   it('should be able to create available time', async () => {
     const result = await sut.execute({
-      company_id: 'company-01',
+      organization_id: 'organization-01',
       end_time_in_minutes: 360,
       start_time_in_minutes: 420,
       week_day: 2,
     })
 
-    expect(result.value?.available.company_id).toEqual(
-      new UniqueEntityID('company-01')
+    expect(result.value?.available.organization_id).toEqual(
+      new UniqueEntityID('organization-01')
     )
   })
 })

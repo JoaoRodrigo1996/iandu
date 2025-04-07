@@ -16,7 +16,7 @@ describe('Register new schedule', () => {
   it('should be able to register new schedule', async () => {
     const result = await sut.execute({
       clientId: '1',
-      companyId: '1',
+      organizationId: '1',
       date: new Date('2022-01-01 13:00:00'),
       createdAt: new Date(),
     })
@@ -37,7 +37,7 @@ describe('Register new schedule', () => {
 
     const result = await sut.execute({
       clientId: '1',
-      companyId: '1',
+      organizationId: '1',
       date: newSchedule.date,
       createdAt: new Date(),
     })

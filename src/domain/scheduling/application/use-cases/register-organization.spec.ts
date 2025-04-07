@@ -1,16 +1,16 @@
 import { InMemoryCompaniesRepository } from 'test/repositories/in-memory-companies-repository'
-import { RegisterCompany } from './register-company'
+import { RegisterOrganization } from './register-organization'
 
 let inMemoryCompaniesRepository: InMemoryCompaniesRepository
-let sut: RegisterCompany
+let sut: RegisterOrganization
 
-describe('Register new company', () => {
+describe('Register new organization', () => {
   beforeEach(() => {
     inMemoryCompaniesRepository = new InMemoryCompaniesRepository()
-    sut = new RegisterCompany(inMemoryCompaniesRepository)
+    sut = new RegisterOrganization(inMemoryCompaniesRepository)
   })
 
-  it('should be able to register a new company', async () => {
+  it('should be able to register a new organization', async () => {
     const result = await sut.execute({
       ownerId: '1',
       name: 'John Doe',
@@ -25,7 +25,7 @@ describe('Register new company', () => {
         zip: '12345',
       },
       cnpj: '12345678901234',
-      description: 'A company description',
+      description: 'A organization description',
       sector: 'Services',
       phone: '(99) 99999-9999',
       createdAt: new Date(),
@@ -33,7 +33,7 @@ describe('Register new company', () => {
 
     expect(result.isRight()).toBe(true)
     expect(result.value).toEqual({
-      company: inMemoryCompaniesRepository.items[0],
+      organization: inMemoryCompaniesRepository.items[0],
     })
   })
 })

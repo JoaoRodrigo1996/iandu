@@ -5,7 +5,7 @@ import type { SchedulingsRepository } from '../repositories/schedulingsRepositor
 import { ScheduleAlreadyExistsError } from './errors/schedule-already-exists-error'
 
 interface RegisterSchedulingRequest {
-  companyId: string
+  organizationId: string
   clientId: string
   date: Date
   createdAt: Date
@@ -22,14 +22,14 @@ export class RegisterScheduling {
   constructor(private schedulesRepository: SchedulingsRepository) {}
 
   async execute({
-    companyId,
+    organizationId,
     clientId,
     date,
     createdAt,
   }: RegisterSchedulingRequest): Promise<RegisterSchedulingResponse> {
     const schedule = Scheduling.create({
       clientId: new UniqueEntityID(clientId),
-      companyId: new UniqueEntityID(companyId),
+      organizationId: new UniqueEntityID(organizationId),
       date,
       createdAt,
     })

@@ -1,7 +1,7 @@
-import type { Company } from '../../enterprise/entities/company'
+import type { Organization } from '../../enterprise/entities/organization'
 
 export abstract class CompaniesRepository {
-  abstract create(company: Company): Promise<void>
-  abstract findByCnpj(cnpj: string): Promise<Company | null>
-  abstract findByName(name: string): Promise<Company | null>
+  abstract create(organization: Organization): Promise<void>
+  abstract findByCnpj(cnpj: string): Promise<Organization | null>
+  abstract findByName(name: string): Promise<Organization | null>
 }

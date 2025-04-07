@@ -1,15 +1,15 @@
 import { faker } from '@faker-js/faker'
 import { UniqueEntityID } from '../../src/core/entities/unique-entity-id'
 import {
-  Company,
-  type CompanyProps,
-} from '../../src/domain/scheduling/enterprise/entities/company'
+  Organization,
+  type OrganizationProps,
+} from '../../src/domain/scheduling/enterprise/entities/organization'
 
-export function makeCompany(
-  override: Partial<CompanyProps> = {},
+export function makeOrganization(
+  override: Partial<OrganizationProps> = {},
   id?: UniqueEntityID
 ) {
-  const company = Company.create(
+  const organization = Organization.create(
     {
       name: faker.company.name(),
       cnpj: faker.number.int({ min: 8 }).toString(),
@@ -32,5 +32,5 @@ export function makeCompany(
     id
   )
 
-  return company
+  return organization
 }

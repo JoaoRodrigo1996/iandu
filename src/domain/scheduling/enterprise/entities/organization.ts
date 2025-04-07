@@ -2,7 +2,7 @@ import type { Optional } from '@/core/types/optional'
 import { Entity } from '../../../../core/entities/entity'
 import type { UniqueEntityID } from '../../../../core/entities/unique-entity-id'
 
-export interface CompanyProps {
+export interface OrganizationProps {
   ownerId: UniqueEntityID
   name: string
   cnpj: string
@@ -23,7 +23,7 @@ export interface CompanyProps {
   updatedAt?: Date
 }
 
-export class Company extends Entity<CompanyProps> {
+export class Organization extends Entity<OrganizationProps> {
   get ownerId() {
     return this.props.ownerId
   }
@@ -50,7 +50,7 @@ export class Company extends Entity<CompanyProps> {
     return this.props.address
   }
 
-  set address(address: CompanyProps['address']) {
+  set address(address: OrganizationProps['address']) {
     this.props.address = address
     this.touch()
   }
@@ -104,10 +104,10 @@ export class Company extends Entity<CompanyProps> {
   }
 
   static create(
-    props: Optional<CompanyProps, 'createdAt'>,
+    props: Optional<OrganizationProps, 'createdAt'>,
     id?: UniqueEntityID
   ) {
-    const company = new Company(
+    const organization = new Organization(
       {
         ...props,
         createdAt: props.createdAt ?? new Date(),
@@ -115,6 +115,6 @@ export class Company extends Entity<CompanyProps> {
       id
     )
 
-    return company
+    return organization
   }
 }

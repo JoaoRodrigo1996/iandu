@@ -4,7 +4,7 @@ import { Available } from '../../enterprise/entities/available'
 import type { AvailablesRepository } from '../repositories/availables-repository'
 
 interface AvailableRequest {
-  company_id: string
+  organization_id: string
   week_day: number
   start_time_in_minutes: number
   end_time_in_minutes: number
@@ -19,10 +19,10 @@ export class AvailableUseCase {
     week_day,
     start_time_in_minutes,
     end_time_in_minutes,
-    company_id,
+    organization_id,
   }: AvailableRequest): Promise<AvailableResponse> {
     const available = Available.create({
-      company_id: new UniqueEntityID(company_id),
+      organization_id: new UniqueEntityID(organization_id),
       start_time_in_minutes,
       end_time_in_minutes,
       week_day,

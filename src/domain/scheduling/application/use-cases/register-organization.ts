@@ -1,10 +1,10 @@
 import { type Either, left, right } from '../../../../core/either'
 import { UniqueEntityID } from '../../../../core/entities/unique-entity-id'
-import { Company } from '../../enterprise/entities/company'
+import { Organization } from '../../enterprise/entities/organization'
 import type { CompaniesRepository } from '../repositories/companies-repository'
-import { CompanyAlreadyExistsError } from './errors/company-already-exists-error'
+import { OrganizationAlreadyExistsError } from './errors/organization-already-exists-error'
 
-interface RegisterCompanyRequest {
+interface RegisterOrganizationRequest {
   ownerId: string
   name: string
   cnpj: string
@@ -24,14 +24,14 @@ interface RegisterCompanyRequest {
   createdAt: Date
 }
 
-type RegisterCompanyResponse = Either<
-  CompanyAlreadyExistsError,
+type RegisterOrganizationResponse = Either<
+  OrganizationAlreadyExistsError,
   {
-    company: Company
+    organization: Organization
   }
 >
 
-export class RegisterCompany {
+export class RegisterOrganization {
   constructor(private companiesRepository: CompaniesRepository) {}
 
   async execute({
@@ -44,15 +44,15 @@ export class RegisterCompany {
     description,
     sector,
     createdAt,
-  }: RegisterCompanyRequest): Promise<RegisterCompanyResponse> {
-    const companyAlreadyExists =
+  }: RegisterOrganizationRequest): Promise<RegisterOrganizationResponse> {
+    const organizationAlreadyExists =
       await this.companiesRepository.findByCnpj(email)
 
-    if (companyAlreadyExists) {
-      return left(new CompanyAlreadyExistsError(email))
+    if (organizationAlreadyExists) {
+      return left(new OrganizationAlreadyExistsError(email))
     }
 
-    const company = Company.create({
+    const organization = Organization.create({
       ownerId: new UniqueEntityID(ownerId),
       name,
       cnpj,
@@ -64,8 +64,8 @@ export class RegisterCompany {
       createdAt,
     })
 
-    await this.companiesRepository.create(company)
+    await this.companiesRepository.create(organization)
 
-    return right({ company })
+    return right({ organization })
   }
 }

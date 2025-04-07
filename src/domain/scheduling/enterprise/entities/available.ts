@@ -6,7 +6,7 @@ export interface AvailableProps {
   start_time_in_minutes: number
   end_time_in_minutes: number
 
-  company_id: UniqueEntityID
+  organization_id: UniqueEntityID
 }
 
 export class Available extends Entity<AvailableProps> {
@@ -34,8 +34,8 @@ export class Available extends Entity<AvailableProps> {
     this.props.end_time_in_minutes = end_time_in_minutes
   }
 
-  get company_id() {
-    return this.props.company_id
+  get organization_id() {
+    return this.props.organization_id
   }
 
   static create(props: AvailableProps, id?: UniqueEntityID) {

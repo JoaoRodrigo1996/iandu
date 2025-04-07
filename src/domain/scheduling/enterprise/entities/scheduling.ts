@@ -3,7 +3,7 @@ import { Entity } from '../../../../core/entities/entity'
 import type { UniqueEntityID } from '../../../../core/entities/unique-entity-id'
 
 export interface SchedulingProps {
-  companyId: UniqueEntityID
+  organizationId: UniqueEntityID
   clientId: UniqueEntityID
   date: Date
   canceledAt?: Date
@@ -12,8 +12,8 @@ export interface SchedulingProps {
 }
 
 export class Scheduling extends Entity<SchedulingProps> {
-  get companyId() {
-    return this.props.companyId
+  get organizationId() {
+    return this.props.organizationId
   }
 
   get clientId() {

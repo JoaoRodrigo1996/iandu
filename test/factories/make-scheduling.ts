@@ -12,7 +12,7 @@ export function makeScheduling(
   const scheduling = Scheduling.create(
     {
       clientId: new UniqueEntityID(),
-      companyId: new UniqueEntityID(),
+      organizationId: new UniqueEntityID(),
       date: new Date(),
       ...override,
     },
