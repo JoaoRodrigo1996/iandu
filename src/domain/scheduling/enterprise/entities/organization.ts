@@ -1,9 +1,11 @@
 import type { Optional } from '@/core/types/optional'
 import { Entity } from '../../../../core/entities/entity'
 import type { UniqueEntityID } from '../../../../core/entities/unique-entity-id'
+import type { MemberProps } from './member'
 
 export interface OrganizationProps {
   ownerId: UniqueEntityID
+  members?: MemberProps[]
   name: string
   cnpj: string
   address: {
