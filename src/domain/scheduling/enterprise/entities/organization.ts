@@ -5,7 +5,7 @@ import type { MemberProps } from './member'
 
 export interface OrganizationProps {
   ownerId: UniqueEntityID
-  members?: MemberProps[]
+  members?: MemberProps
   name: string
   cnpj: string
   address: {
@@ -28,6 +28,14 @@ export interface OrganizationProps {
 export class Organization extends Entity<OrganizationProps> {
   get ownerId() {
     return this.props.ownerId
+  }
+
+  get members() {
+    return this.props.members
+  }
+
+  set members(members: OrganizationProps['members']) {
+    this.props.members = members
   }
 
   get name() {

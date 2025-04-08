@@ -16,6 +16,14 @@ export class Member extends Entity<MemberProps> {
     this.props.role = role
   }
 
+  get clientId() {
+    return this.props.clientId
+  }
+
+  get organizationId() {
+    return this.props.organizationId
+  }
+
   static create(props: MemberProps, id?: UniqueEntityID) {
     const member = new Member(props, id)
 

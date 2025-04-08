@@ -1,7 +1,9 @@
 import type { Organization } from '@/domain/scheduling/enterprise/entities/organization'
-import type { CompaniesRepository } from '../../src/domain/scheduling/application/repositories/companies-repository'
+import type { OrganizationsRepository } from '../../src/domain/scheduling/application/repositories/organizations-repository'
 
-export class InMemoryCompaniesRepository implements CompaniesRepository {
+export class InMemoryOrganizationsRepository
+  implements OrganizationsRepository
+{
   public items: Organization[] = []
 
   async create(organization: Organization): Promise<void> {
@@ -11,6 +13,18 @@ export class InMemoryCompaniesRepository implements CompaniesRepository {
   async findByCnpj(cnpj: string): Promise<Organization | null> {
     const organization = this.items.find(
       organization => organization.cnpj === cnpj
+    )
+
+    if (!organization) {
+      return null
+    }
+
+    return organization
+  }
+
+  async findById(id: string): Promise<Organization | null> {
+    const organization = this.items.find(
+      organization => organization.id.toString() === id
     )
 
     if (!organization) {

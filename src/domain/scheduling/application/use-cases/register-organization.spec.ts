@@ -1,13 +1,13 @@
-import { InMemoryCompaniesRepository } from 'test/repositories/in-memory-companies-repository'
+import { InMemoryOrganizationsRepository } from 'test/repositories/in-memory-organizations-repository'
 import { RegisterOrganization } from './register-organization'
 
-let inMemoryCompaniesRepository: InMemoryCompaniesRepository
+let inMemoryOrganizationsRepository: InMemoryOrganizationsRepository
 let sut: RegisterOrganization
 
 describe('Register new organization', () => {
   beforeEach(() => {
-    inMemoryCompaniesRepository = new InMemoryCompaniesRepository()
-    sut = new RegisterOrganization(inMemoryCompaniesRepository)
+    inMemoryOrganizationsRepository = new InMemoryOrganizationsRepository()
+    sut = new RegisterOrganization(inMemoryOrganizationsRepository)
   })
 
   it('should be able to register a new organization', async () => {
@@ -33,7 +33,7 @@ describe('Register new organization', () => {
 
     expect(result.isRight()).toBe(true)
     expect(result.value).toEqual({
-      organization: inMemoryCompaniesRepository.items[0],
+      organization: inMemoryOrganizationsRepository.items[0],
     })
   })
 })

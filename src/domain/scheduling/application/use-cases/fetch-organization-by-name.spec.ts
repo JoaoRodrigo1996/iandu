@@ -1,14 +1,14 @@
 import { makeOrganization } from 'test/factories/make-organization'
-import { InMemoryCompaniesRepository } from 'test/repositories/in-memory-companies-repository'
+import { InMemoryOrganizationsRepository } from 'test/repositories/in-memory-organizations-repository'
 import { FetchOrganizationByName } from './fetch-organization-by-name'
 
-let inMemoryCompaniesRespository: InMemoryCompaniesRepository
+let inMemoryOrganizationsRespository: InMemoryOrganizationsRepository
 let sut: FetchOrganizationByName
 
 describe('Fetch organization', () => {
   beforeEach(() => {
-    inMemoryCompaniesRespository = new InMemoryCompaniesRepository()
-    sut = new FetchOrganizationByName(inMemoryCompaniesRespository)
+    inMemoryOrganizationsRespository = new InMemoryOrganizationsRepository()
+    sut = new FetchOrganizationByName(inMemoryOrganizationsRespository)
   })
 
   it('should be able to fetch a organization by name', async () => {
@@ -16,7 +16,7 @@ describe('Fetch organization', () => {
       name: 'Amazon Web Services',
     })
 
-    inMemoryCompaniesRespository.create(newOrganization)
+    inMemoryOrganizationsRespository.create(newOrganization)
 
     const result = await sut.execute({ name: 'Amazon Web Services' })
 

@@ -1,7 +1,7 @@
 import { type Either, left, right } from '../../../../core/either'
 import { UniqueEntityID } from '../../../../core/entities/unique-entity-id'
 import { Organization } from '../../enterprise/entities/organization'
-import type { CompaniesRepository } from '../repositories/companies-repository'
+import type { OrganizationsRepository } from '../repositories/organizations-repository'
 import { OrganizationAlreadyExistsError } from './errors/organization-already-exists-error'
 
 interface RegisterOrganizationRequest {
@@ -32,7 +32,7 @@ type RegisterOrganizationResponse = Either<
 >
 
 export class RegisterOrganization {
-  constructor(private companiesRepository: CompaniesRepository) {}
+  constructor(private organizationsRepository: OrganizationsRepository) {}
 
   async execute({
     ownerId,
@@ -46,7 +46,7 @@ export class RegisterOrganization {
     createdAt,
   }: RegisterOrganizationRequest): Promise<RegisterOrganizationResponse> {
     const organizationAlreadyExists =
-      await this.companiesRepository.findByCnpj(email)
+      await this.organizationsRepository.findByCnpj(email)
 
     if (organizationAlreadyExists) {
       return left(new OrganizationAlreadyExistsError(email))
@@ -64,7 +64,7 @@ export class RegisterOrganization {
       createdAt,
     })
 
-    await this.companiesRepository.create(organization)
+    await this.organizationsRepository.create(organization)
 
     return right({ organization })
   }
