@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx ./src/index.ts",
+    "dev": "tsx ./src/infra/server.ts",
+    "build": "tsup src --out-dir build",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:cov": "vitest run --coverage"
@@ -23,6 +24,7 @@
     "vitest": "^3.0.7"
   },
   "dependencies": {
-    "dayjs": "^1.11.13"
+    "dayjs": "^1.11.13",
+    "fastify": "^5.2.2"
   }
 }
