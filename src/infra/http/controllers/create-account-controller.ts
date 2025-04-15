@@ -1,37 +1,39 @@
-import type { RegisterClient } from '@/domain/scheduling/application/use-cases/register-client'
+import { makeCreateAccountFactory } from '@/infra/factories/make-create-account-factory'
 import type { FastifyReply, FastifyRequest } from 'fastify'
-import { z } from 'zod'
+import { ZodError, z } from 'zod'
 
 const createAccountBodySchema = z.object({
   name: z.string(),
   userName: z.string(),
   email: z.string().email(),
-  password: z.string().min(8),
+  password: z.string(),
 })
 
 export class CreateAccountController {
-  constructor(private createAccountUseCase: RegisterClient) {}
-
   async handle(request: FastifyRequest, reply: FastifyReply) {
-    const { name, userName, email, password } = createAccountBodySchema.parse(
-      request.body
-    )
+    try {
+      const { name, userName, email, password } = createAccountBodySchema.parse(
+        request.body
+      )
 
-    const makeCreateAccountUseCase = await this.createAccountUseCase.execute({
-      name,
-      userName,
-      email,
-      password,
-    })
+      const makeCreateAccountUseCase = makeCreateAccountFactory()
 
-    if (makeCreateAccountUseCase.isLeft()) {
-      return reply
-        .status(400)
-        .send({ message: makeCreateAccountUseCase.value.message })
+      await makeCreateAccountUseCase.execute({
+        name,
+        userName,
+        email,
+        password,
+      })
+
+      return reply.status(201).send()
+    } catch (error) {
+      if (error instanceof ZodError) {
+        return reply
+          .status(400)
+          .send({ message: 'Validation error', issues: error.errors })
+      }
+
+      return reply.status(500).send({ message: 'Internal server error.' })
     }
-
-    return reply.status(201).send({
-      message: 'Account created successfully',
-    })
   }
 }
