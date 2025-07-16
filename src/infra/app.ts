@@ -1,9 +1,14 @@
+import jwt from '@fastify/jwt'
 import fastify from 'fastify'
 import { ZodError } from 'zod'
 import { env } from './env'
 import { accountRoutes } from './http/routes/account'
 
 export const app = fastify()
+
+app.register(jwt, {
+  secret: 'sercret_Key_test',
+})
 
 app.register(accountRoutes)
 

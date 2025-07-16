@@ -3,7 +3,7 @@ import type { Client } from '@/domain/scheduling/enterprise/entities/client'
 import { prisma } from '../index'
 import { PrismaClientMapper } from '../mappers/prisma-client-mapper'
 
-export class PrismaCreateAccountRepository implements ClientsRepository {
+export class PrismaClientsRepository implements ClientsRepository {
   async create(client: Client): Promise<void> {
     const data = PrismaClientMapper.toPrisma(client)
 
