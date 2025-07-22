@@ -22,5 +22,74 @@ model Client {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  Organization Organization?
+  Schedule     Schedule[]
+  Member       Member[]
+
   @@map("clients")
+}
+
+model Schedule {
+  id String @id @default(uuid())
+
+  client   Client @relation(fields: [clientId], references: [id])
+  clientId String @map("client_id")
+
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String       @map("organization_id")
+
+  date DateTime
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("schedules")
+}
+
+enum Role {
+  ADMIN
+  EMPLOYEE
+  MEMBER
+}
+
+model Member {
+  id String @id @default(uuid())
+
+  member   Client @relation(fields: [clientId], references: [id])
+  clientId String @map("client_id")
+
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String       @map("organization_id")
+
+  role Role @default(MEMBER)
+
+  @@map("members")
+}
+
+model Organization {
+  id String @id @default(uuid())
+
+  ownerId  Client @relation(fields: [clientId], references: [id])
+  clientId String @unique @map("client_id")
+
+  name         String
+  description  String
+  cnpj         String   @unique
+  street       String
+  number       Int
+  complement   String
+  neighborhood String
+  city         String
+  state        String
+  zip          String
+  email        String   @unique
+  phone        String
+  sector       String
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  Schedule Schedule[]
+  Member   Member[]
+
+  @@map("organizations")
 }
