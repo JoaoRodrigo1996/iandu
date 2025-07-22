@@ -11,7 +11,15 @@ export class PrismaClientsRepository implements ClientsRepository {
   }
 
   async findById(clientId: string): Promise<Client | null> {
-    throw new Error('Method not implemented.')
+    const client = await prisma.client.findUnique({
+      where: { id: clientId },
+    })
+
+    if(!client){
+      return null
+    }
+    
+    return PrismaClientMapper.toDomain(client)
   }
 
   async findByEmail(email: string): Promise<Client | null> {
