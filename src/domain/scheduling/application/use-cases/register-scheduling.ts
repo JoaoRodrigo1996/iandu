@@ -8,7 +8,6 @@ interface RegisterSchedulingRequest {
   organizationId: string
   clientId: string
   date: Date
-  createdAt: Date
 }
 
 type RegisterSchedulingResponse = Either<
@@ -24,24 +23,23 @@ export class RegisterScheduling {
   async execute({
     organizationId,
     clientId,
-    date,
-    createdAt,
+    date,    
   }: RegisterSchedulingRequest): Promise<RegisterSchedulingResponse> {
     const schedule = Scheduling.create({
       clientId: new UniqueEntityID(clientId),
       organizationId: new UniqueEntityID(organizationId),
-      date,
-      createdAt,
+      date      
     })
 
     const scheduleAlreadyExists =
-      await this.schedulesRepository.findByClientIdAndDate(
+      await this.schedulesRepository.findByClientIdOrganizationIdAndDate(
         clientId,
+        organizationId,
         schedule.date
       )
 
     if (scheduleAlreadyExists) {
-      return left(new ScheduleAlreadyExistsError(schedule.id.toString()))
+      return left(new ScheduleAlreadyExistsError())
     }
 
     await this.schedulesRepository.create(schedule)

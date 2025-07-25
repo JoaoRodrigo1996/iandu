@@ -18,7 +18,6 @@ describe('Register new schedule', () => {
       clientId: '1',
       organizationId: '1',
       date: new Date('2022-01-01 13:00:00'),
-      createdAt: new Date(),
     })
 
     expect(result.isRight()).toBe(true)
@@ -30,6 +29,7 @@ describe('Register new schedule', () => {
   it('should not be able to register new schedule with same date', async () => {
     const newSchedule = makeScheduling({
       clientId: new UniqueEntityID('1'),
+      organizationId: new UniqueEntityID('1'),
       date: new Date('2022-01-01 13:00:00'),
     })
 
@@ -39,7 +39,6 @@ describe('Register new schedule', () => {
       clientId: '1',
       organizationId: '1',
       date: newSchedule.date,
-      createdAt: new Date(),
     })
 
     expect(result.isLeft()).toBe(true)
