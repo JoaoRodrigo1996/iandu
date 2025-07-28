@@ -28,7 +28,6 @@ describe('Register new organization', () => {
       description: 'A organization description',
       sector: 'Services',
       phone: '(99) 99999-9999',
-      createdAt: new Date(),
     })
 
     expect(result.isRight()).toBe(true)

@@ -21,7 +21,6 @@ interface RegisterOrganizationRequest {
   phone: string
   description: string
   sector: string
-  createdAt: Date
 }
 
 type RegisterOrganizationResponse = Either<
@@ -43,7 +42,6 @@ export class RegisterOrganization {
     phone,
     description,
     sector,
-    createdAt,
   }: RegisterOrganizationRequest): Promise<RegisterOrganizationResponse> {
     const organizationAlreadyExists =
       await this.organizationsRepository.findByCnpj(email)
@@ -61,7 +59,6 @@ export class RegisterOrganization {
       phone,
       description,
       sector,
-      createdAt,
     })
 
     await this.organizationsRepository.create(organization)
