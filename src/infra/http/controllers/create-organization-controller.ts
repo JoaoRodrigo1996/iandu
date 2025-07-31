@@ -41,14 +41,7 @@ export class CreateOrganizationController {
     })
 
     if (result.isLeft()) {
-      const error = result.value
-
-      switch (error.constructor) {
-        case OrganizationAlreadyExistsError:
-          throw new Error('Organization already exist')
-        default:
-          throw new Error(error.message)
-      }
+      return reply.status(400).send({ message: result.value.message })
     }
 
     return reply.status(200).send()

@@ -7,7 +7,7 @@ const createOrganizationController = new CreateOrganizationController()
 export function organizationRoutes(app: FastifyInstance) {
   app.post(
     '/organization',
-    { onRequest: ensureAuthenticated },
+    { onRequest: [ensureAuthenticated] },
     createOrganizationController.handle
   )
 }

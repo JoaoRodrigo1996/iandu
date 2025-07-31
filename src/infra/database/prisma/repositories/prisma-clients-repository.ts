@@ -1,7 +1,9 @@
 import type { ClientsRepository } from '@/domain/scheduling/application/repositories/clients-repository'
 import type { Client } from '@/domain/scheduling/enterprise/entities/client'
-import { prisma } from '../index'
+import { PrismaService } from '../index'
 import { PrismaClientMapper } from '../mappers/prisma-client-mapper'
+
+const prisma = new PrismaService()
 
 export class PrismaClientsRepository implements ClientsRepository {
   async create(client: Client): Promise<void> {
@@ -15,10 +17,10 @@ export class PrismaClientsRepository implements ClientsRepository {
       where: { id: clientId },
     })
 
-    if(!client){
+    if (!client) {
       return null
     }
-    
+
     return PrismaClientMapper.toDomain(client)
   }
 

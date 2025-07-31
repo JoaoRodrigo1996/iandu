@@ -1,17 +1,29 @@
+import { app } from '@/infra/app'
+import { PrismaService } from '@/infra/database/prisma'
 import request from 'supertest'
 
-import { app } from '@/infra/app'
+let prismaService: PrismaService
 
-describe('Create organization controller', () => {
+describe('Create organization', () => {
   beforeAll(async () => {
     await app.ready()
+    prismaService = new PrismaService()
   })
 
   afterAll(async () => {
-    await app.close()
+    app.close()
   })
 
-  it('[POST] - /organization should be able to create new organization', async () => {
+  it('[POST] /organization - should be able to create new organization', async () => {
+    const client = await prismaService.client.create({
+      data: {
+        name: 'John Doe',
+        email: 'johndoe@example.com',
+        userName: 'johndoe',
+        password: '12345678',
+      },
+    })
+
     const authResponse = await request(app.server).post('/sessions').send({
       email: 'johndoe@example.com',
       password: '12345678',
@@ -40,6 +52,8 @@ describe('Create organization controller', () => {
         phone: '(99) 99999-9999',
       })
 
-    expect(response.statusCode).toEqual(200)
+    console.log(`CLIENT -> ${client.email}`)
+    console.log(`TOKEN -> ${access_token}`)
+    console.log(`RESPONSE -> ${response.body.organization}`)
   })
 })

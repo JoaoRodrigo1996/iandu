@@ -1,7 +1,9 @@
 import type { OrganizationsRepository } from '@/domain/scheduling/application/repositories/organizations-repository'
 import type { Organization } from '@/domain/scheduling/enterprise/entities/organization'
-import { prisma } from '..'
+import { PrismaService } from '..'
 import { PrismaOrganizationMapper } from '../mappers/prisma-organization-mapper'
+
+const prisma = new PrismaService()
 
 export class PrismaOrganizationsRepository implements OrganizationsRepository {
   async create(organization: Organization): Promise<void> {

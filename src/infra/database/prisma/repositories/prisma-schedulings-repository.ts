@@ -1,7 +1,9 @@
 import type { SchedulingsRepository } from '@/domain/scheduling/application/repositories/schedulingsRepository'
 import type { Scheduling } from '@/domain/scheduling/enterprise/entities/scheduling'
-import { prisma } from '../index'
+import { PrismaService } from '../index'
 import { PrismaScheduleMapper } from '../mappers/prisma-schedule-mapper'
+
+const prisma = new PrismaService()
 
 export class PrismaSchedulingsRepository implements SchedulingsRepository {
   async create(agenda: Scheduling): Promise<void> {
