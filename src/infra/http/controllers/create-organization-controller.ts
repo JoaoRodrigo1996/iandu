@@ -1,3 +1,4 @@
+import { ClientAlreadyOwnsAnOrganizationError } from '@/domain/scheduling/application/use-cases/errors/client-already-owns-organization'
 import { OrganizationAlreadyExistsError } from '@/domain/scheduling/application/use-cases/errors/organization-already-exists-error'
 import { makeOrganizationFactory } from '@/infra/factories/make-organization-factory'
 import type { FastifyReply, FastifyRequest } from 'fastify'
@@ -30,7 +31,7 @@ export class CreateOrganizationController {
     const createOrganizationUseCase = makeOrganizationFactory()
 
     const result = await createOrganizationUseCase.execute({
-      ownerId: sub,
+      clientId: sub,
       address,
       cnpj,
       description,
@@ -41,7 +42,16 @@ export class CreateOrganizationController {
     })
 
     if (result.isLeft()) {
-      return reply.status(400).send({ message: result.value.message })
+      const error = result.value
+
+      switch (error.constructor) {
+        case OrganizationAlreadyExistsError:
+          throw new Error('Organization already exists with this cnpj.')
+        case ClientAlreadyOwnsAnOrganizationError:
+          throw new Error('Client already owns an organization')
+        default:
+          throw new Error(error.message)
+      }
     }
 
     return reply.status(200).send()

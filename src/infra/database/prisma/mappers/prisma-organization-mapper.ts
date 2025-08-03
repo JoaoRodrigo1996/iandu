@@ -6,7 +6,7 @@ import type { Prisma, Organization as PrismaOrganization } from '@prisma/client'
 export class PrismaOrganizationMapper {
   static toDomain(raw: PrismaOrganization): Organization {
     return Organization.create({
-      ownerId: new UniqueEntityID(raw.clientId),
+      clientId: new UniqueEntityID(raw.clientId),
       address: {
         city: raw.city,
         complement: raw.complement,
@@ -30,7 +30,7 @@ export class PrismaOrganizationMapper {
   ): Prisma.OrganizationUncheckedCreateInput {
     return {
       id: organization.id.toString(),
-      clientId: organization.ownerId.toString(),
+      clientId: organization.clientId.toString(),
       cnpj: organization.cnpj,
       description: organization.description,
       email: organization.email,

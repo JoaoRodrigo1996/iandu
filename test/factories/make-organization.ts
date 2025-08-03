@@ -24,7 +24,7 @@ export function makeOrganization(
         street: faker.location.street(),
       },
       description: faker.lorem.paragraph(),
-      ownerId: new UniqueEntityID(),
+      clientId: new UniqueEntityID(),
       phone: faker.phone.number({ style: 'national' }),
       sector: faker.commerce.department(),
       ...override,

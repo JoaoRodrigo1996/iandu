@@ -4,7 +4,7 @@ import type { UniqueEntityID } from '../../../../core/entities/unique-entity-id'
 import type { MemberProps } from './member'
 
 export interface OrganizationProps {
-  ownerId: UniqueEntityID
+  clientId: UniqueEntityID
   members?: MemberProps
   name: string
   cnpj: string
@@ -26,8 +26,8 @@ export interface OrganizationProps {
 }
 
 export class Organization extends Entity<OrganizationProps> {
-  get ownerId() {
-    return this.props.ownerId
+  get clientId() {
+    return this.props.clientId
   }
 
   get members() {

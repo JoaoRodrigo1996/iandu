@@ -12,7 +12,7 @@ describe('Register new organization', () => {
 
   it('should be able to register a new organization', async () => {
     const result = await sut.execute({
-      ownerId: '1',
+      clientId: '1',
       name: 'John Doe',
       email: 'johndoe@example.com',
       address: {

@@ -1,5 +1,7 @@
 import { app } from '@/infra/app'
 import { PrismaService } from '@/infra/database/prisma'
+import { faker } from '@faker-js/faker'
+import { hash, hashSync } from 'bcrypt'
 import request from 'supertest'
 
 let prismaService: PrismaService
@@ -11,16 +13,16 @@ describe('Create organization', () => {
   })
 
   afterAll(async () => {
-    app.close()
+    await app.close()
   })
 
   it('[POST] /organization - should be able to create new organization', async () => {
-    const client = await prismaService.client.create({
+    await prismaService.client.create({
       data: {
         name: 'John Doe',
         email: 'johndoe@example.com',
         userName: 'johndoe',
-        password: '12345678',
+        password: await hash('12345678', 8),
       },
     })
 
@@ -35,8 +37,7 @@ describe('Create organization', () => {
       .post('/organization')
       .set('Authorization', `Bearer ${access_token}`)
       .send({
-        name: 'John Doe',
-        email: 'johndoe@example.com',
+        name: 'Amazon',
         address: {
           city: 'Miami',
           complement: 'Apt 123',
@@ -46,14 +47,14 @@ describe('Create organization', () => {
           street: 'Main St',
           zip: '12345',
         },
-        cnpj: '12345678901234',
+        email: faker.internet.email(),
+        cnpj: `${faker.string.numeric(14)}`,
         description: 'A organization description',
         sector: 'Services',
         phone: '(99) 99999-9999',
       })
 
-    console.log(`CLIENT -> ${client.email}`)
-    console.log(`TOKEN -> ${access_token}`)
-    console.log(`RESPONSE -> ${response.body.organization}`)
+    console.log(`RESPONSE CODE -> ${response.statusCode}`)
+    console.log(`RESPONSE BODY -> ${response.body}`)
   })
 })
