@@ -23,24 +23,24 @@ export class RegisterScheduling {
   async execute({
     organizationId,
     clientId,
-    date,    
+    date,
   }: RegisterSchedulingRequest): Promise<RegisterSchedulingResponse> {
-    const schedule = Scheduling.create({
-      clientId: new UniqueEntityID(clientId),
-      organizationId: new UniqueEntityID(organizationId),
-      date      
-    })
-
     const scheduleAlreadyExists =
       await this.schedulesRepository.findByClientIdOrganizationIdAndDate(
         clientId,
         organizationId,
-        schedule.date
+        date
       )
 
     if (scheduleAlreadyExists) {
       return left(new ScheduleAlreadyExistsError())
     }
+
+    const schedule = Scheduling.create({
+      clientId: new UniqueEntityID(clientId),
+      organizationId: new UniqueEntityID(organizationId),
+      date,
+    })
 
     await this.schedulesRepository.create(schedule)
 

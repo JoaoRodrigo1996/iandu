@@ -1,3 +1,4 @@
+import { ScheduleAlreadyExistsError } from '@/domain/scheduling/application/use-cases/errors/schedule-already-exists-error'
 import { makeRegisterSchedulingFactory } from '@/infra/factories/make-register-scheduling-factory'
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
@@ -38,7 +39,14 @@ export class RegisterSchedulingController {
     })
 
     if (result.isLeft()) {
-      return reply.status(404).send({ message: result.value.message })
+      const error = result.value
+
+      switch (error.constructor) {
+        case ScheduleAlreadyExistsError:
+          throw new Error('You already have a schedule for this date.')
+        default:
+          throw new Error(error.message)
+      }
     }
 
     return reply.status(200).send()

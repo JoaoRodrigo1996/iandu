@@ -3,6 +3,7 @@ import { OrganizationAlreadyExistsError } from '@/domain/scheduling/application/
 import { makeOrganizationFactory } from '@/infra/factories/make-organization-factory'
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
+import { OrganizationPresenter } from '../presenters/organization-presenter'
 
 const createOrganizationBodySchema = z.object({
   name: z.string(),
@@ -54,6 +55,8 @@ export class CreateOrganizationController {
       }
     }
 
-    return reply.status(200).send()
+    return reply.status(200).send({
+      organization: OrganizationPresenter.toHTTP(result.value.organization),
+    })
   }
 }
