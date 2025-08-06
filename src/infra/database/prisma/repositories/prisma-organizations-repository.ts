@@ -40,8 +40,18 @@ export class PrismaOrganizationsRepository implements OrganizationsRepository {
     return PrismaOrganizationMapper.toDomain(organization)
   }
 
-  findById(id: string): Promise<Organization | null> {
-    throw new Error('Method not implemented.')
+  async findById(id: string): Promise<Organization | null> {
+    const organization = await prisma.organization.findUnique({
+      where: {
+        id,
+      },
+    })
+
+    if (!organization) {
+      return null
+    }
+
+    return PrismaOrganizationMapper.toDomain(organization)
   }
 
   findByName(name: string): Promise<Organization | null> {
