@@ -37,7 +37,15 @@ export class PrismaClientsRepository implements ClientsRepository {
   }
 
   async findByUserName(userName: string): Promise<Client | null> {
-    throw new Error('Method not implemented.')
+    const client = await prisma.client.findUnique({
+      where: { userName },
+    })
+
+    if (!client) {
+      return null
+    }
+
+    return PrismaClientMapper.toDomain(client)
   }
 
   async update(client: Client): Promise<void> {
