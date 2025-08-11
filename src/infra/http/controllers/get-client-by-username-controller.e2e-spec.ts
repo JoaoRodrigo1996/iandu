@@ -38,7 +38,6 @@ describe('Get client by username', () => {
       .set('Authorization', `Bearer ${access_token}`)
       .send()
 
-    console.log(response.body)
-    console.log(response.statusCode)
+    expect(response.statusCode).toBe(200)
   })
 })
