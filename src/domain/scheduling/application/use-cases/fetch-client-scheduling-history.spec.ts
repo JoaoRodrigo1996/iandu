@@ -38,6 +38,9 @@ describe('Fetch client scheduling history', () => {
 
     const result = await sut.execute({ clientId: 'client-1' })
 
-    expect(result.value?.history).toHaveLength(3)
+    expect(result.isRight()).toBe(true)
+    if (result.isRight()) {
+      expect(result.value.history).toHaveLength(3)
+    }
   })
 })

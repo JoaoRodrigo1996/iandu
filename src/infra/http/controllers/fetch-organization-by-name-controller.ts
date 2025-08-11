@@ -12,8 +12,6 @@ export class FetchOrganizationByNameController {
   async handle(request: FastifyRequest, reply: FastifyReply) {
     const { name } = fetchOrganizationByNameQuerySchema.parse(request.query)
 
-    console.log('CONTROLLER ', name)
-
     const organizationUseCase = makeFetchOrganizationByNameFactory()
 
     const result = await organizationUseCase.execute({ name })

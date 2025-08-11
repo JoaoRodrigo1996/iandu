@@ -5,7 +5,7 @@ import request from 'supertest'
 
 let prisma: PrismaService
 
-describe('Fetch organization by name', () => {
+describe('Fetch client schedule history', () => {
   beforeAll(async () => {
     app.ready()
     prisma = new PrismaService()
@@ -15,7 +15,7 @@ describe('Fetch organization by name', () => {
     app.close()
   })
 
-  it('[GET] /organization - should be able to fetch organization by name', async () => {
+  it('[GET] /schedule/history - should be able to fetch client schedule history', async () => {
     const client = {
       name: faker.person.fullName(),
       email: faker.internet.email(),
@@ -36,7 +36,7 @@ describe('Fetch organization by name', () => {
 
     const { access_token } = await authResponse.body
 
-    await request(app.server)
+    const organization = await request(app.server)
       .post('/organization')
       .set('Authorization', `Bearer ${access_token}`)
       .send({
@@ -57,19 +57,20 @@ describe('Fetch organization by name', () => {
         phone: '(99) 99999-9999',
       })
 
+    const organizationId = organization.body.organization.id.value
+
+    await request(app.server)
+      .post(`/schedule/${organizationId}`)
+      .set('Authorization', `Bearer ${access_token}`)
+      .send({
+        date: new Date('2022-01-01T13:00:00.000Z'),
+      })
+
     const response = await request(app.server)
-      .get('/organization')
-      .query({ name: 'Amazon' })
+      .get('/schedule/history')
       .set('Authorization', `Bearer ${access_token}`)
       .send()
 
     expect(response.statusCode).toBe(200)
-    expect(response.body).toEqual(
-      expect.objectContaining({
-        organization: expect.objectContaining({
-          name: 'Amazon',
-        }),
-      })
-    )
   })
 })

@@ -8,7 +8,7 @@ interface FetchClientSchedulingsHistoryRequest {
 }
 
 type FetchClientSchedulingsHistoryResponse = Either<
-  null,
+  ResourceNotFoundError | Error,
   {
     history: Scheduling[]
   }
@@ -21,6 +21,10 @@ export class FetchClientSchedulingsHistoryUseCase {
     clientId,
   }: FetchClientSchedulingsHistoryRequest): Promise<FetchClientSchedulingsHistoryResponse> {
     const history = await this.schedulingRepository.findByClientId(clientId)
+
+    if (!history) {
+      return left(new ResourceNotFoundError())
+    }
 
     return right({ history })
   }

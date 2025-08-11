@@ -16,8 +16,14 @@ export class PrismaSchedulingsRepository implements SchedulingsRepository {
     throw new Error('Method not implemented.')
   }
 
-  findByClientId(clientId: string): Promise<Scheduling[]> {
-    throw new Error('Method not implemented.')
+  async findByClientId(clientId: string): Promise<Scheduling[]> {
+    const schedules = await prisma.schedule.findMany({
+      where: {
+        clientId,
+      },
+    })
+
+    return schedules.map(PrismaScheduleMapper.toDomain)
   }
 
   async findByClientIdOrganizationIdAndDate(
