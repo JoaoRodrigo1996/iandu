@@ -19,13 +19,11 @@ describe('Edit profile', () => {
 
     const result = await sut.execute({
       name: 'John Doe',
-      email: 'johndoe@example.com',
       client_id: 'client-1',
     })
 
     expect(inMemoryClientsRepository.items[0]).toMatchObject({
       name: 'John Doe',
-      email: 'johndoe@example.com',
     })
   })
 })

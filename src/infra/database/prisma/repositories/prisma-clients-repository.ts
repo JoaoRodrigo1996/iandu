@@ -49,6 +49,15 @@ export class PrismaClientsRepository implements ClientsRepository {
   }
 
   async update(client: Client): Promise<void> {
-    throw new Error('Method not implemented.')
+    const data = PrismaClientMapper.toPrisma(client)
+
+    await Promise.all([
+      prisma.client.update({
+        where: {
+          id: client.id.toString(),
+        },
+        data,
+      }),
+    ])
   }
 }

@@ -7,7 +7,6 @@ import type { ClientsRepository } from '../repositories/clients-repository'
 interface EditProfileUseCaseRequest {
   client_id: string
   name: string
-  email: string
 }
 
 type EditProfileUseCaseResponse = Either<
@@ -20,7 +19,11 @@ type EditProfileUseCaseResponse = Either<
 export class EditProfileUseCase {
   constructor(private clientsRepository: ClientsRepository) {}
 
-  async execute({ client_id, email, name }: EditProfileUseCaseRequest) {
+  async execute({
+    client_id,
+
+    name,
+  }: EditProfileUseCaseRequest): Promise<EditProfileUseCaseResponse> {
     const client = await this.clientsRepository.findById(client_id)
 
     if (!client) {
@@ -31,7 +34,6 @@ export class EditProfileUseCase {
       return left(new NotAllowedError())
     }
 
-    client.email = email
     client.name = name
 
     await this.clientsRepository.update(client)
