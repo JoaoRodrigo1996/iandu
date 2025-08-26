@@ -1,14 +1,20 @@
 import { app } from '@/infra/app'
+import { JwtEncrypter } from '@/infra/cryptography/jwt-encrypter'
 import { PrismaService } from '@/infra/database/prisma'
 import { faker } from '@faker-js/faker'
 import request from 'supertest'
+import { ClientFactory } from 'test/factories/make-client'
 
 let prisma: PrismaService
+let clientFactory: ClientFactory
+let jwtService: JwtEncrypter
 
 describe('Edit profile', () => {
   beforeAll(async () => {
     app.ready()
     prisma = new PrismaService()
+    jwtService = new JwtEncrypter(app)
+    clientFactory = new ClientFactory(prisma)
   })
 
   afterAll(async () => {
@@ -16,25 +22,8 @@ describe('Edit profile', () => {
   })
 
   it('[PATCH] /edit - should be able to edit profile.', async () => {
-    const client = {
-      name: faker.person.fullName(),
-      email: faker.internet.email(),
-      userName: faker.internet.username(),
-    }
-
-    await request(app.server).post('/users').send({
-      name: client.name,
-      email: client.email,
-      userName: client.userName,
-      password: '12345678',
-    })
-
-    const authResponse = await request(app.server).post('/sessions').send({
-      email: client.email,
-      password: '12345678',
-    })
-
-    const { access_token } = await authResponse.body
+    const client = await clientFactory.makePrismaClient()
+    const access_token = await jwtService.encrypt({ sub: client.id.toString() })
 
     const response = await request(app.server)
       .patch('/edit')
