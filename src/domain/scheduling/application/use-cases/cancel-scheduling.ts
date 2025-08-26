@@ -2,7 +2,6 @@ import { type Either, left, right } from '@/core/either'
 import { NotAllowedError } from '@/core/erros/errors/not-allowed-error'
 import { ResourceNotFoundError } from '@/core/erros/errors/resource-not-found-error'
 import dayjs from 'dayjs'
-import type { Scheduling } from '../../enterprise/entities/scheduling'
 import type { SchedulingsRepository } from '../repositories/schedulingsRepository'
 
 interface CancelSchedulingUseCaseRequest {
@@ -12,7 +11,7 @@ interface CancelSchedulingUseCaseRequest {
 
 type CancelSchedulingUseCaseResponse = Either<
   ResourceNotFoundError | NotAllowedError,
-  { scheduling: Scheduling }
+  null
 >
 
 export class CancelSchedulingUseCase {
@@ -28,7 +27,7 @@ export class CancelSchedulingUseCase {
       return left(new ResourceNotFoundError())
     }
 
-    if (scheduling?.clientId.toString() !== client_id) {
+    if (scheduling.clientId.toString() !== client_id) {
       return left(new NotAllowedError())
     }
 
@@ -42,6 +41,6 @@ export class CancelSchedulingUseCase {
 
     await this.schedulingsRepository.cancel(scheduling)
 
-    return right({ scheduling })
+    return right(null)
   }
 }

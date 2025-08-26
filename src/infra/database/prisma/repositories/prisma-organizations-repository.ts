@@ -1,19 +1,19 @@
 import type { OrganizationsRepository } from '@/domain/scheduling/application/repositories/organizations-repository'
 import type { Organization } from '@/domain/scheduling/enterprise/entities/organization'
-import { PrismaService } from '..'
+import type { PrismaService } from '..'
 import { PrismaOrganizationMapper } from '../mappers/prisma-organization-mapper'
 
-const prisma = new PrismaService()
-
 export class PrismaOrganizationsRepository implements OrganizationsRepository {
+  constructor(private prisma: PrismaService) {}
+
   async create(organization: Organization): Promise<void> {
     const data = PrismaOrganizationMapper.toPrisma(organization)
 
-    await prisma.organization.create({ data })
+    await this.prisma.organization.create({ data })
   }
 
   async findByCnpj(cnpj: string): Promise<Organization | null> {
-    const organization = await prisma.organization.findUnique({
+    const organization = await this.prisma.organization.findUnique({
       where: {
         cnpj,
       },
@@ -27,7 +27,7 @@ export class PrismaOrganizationsRepository implements OrganizationsRepository {
   }
 
   async findByClientId(clientId: string): Promise<Organization | null> {
-    const organization = await prisma.organization.findUnique({
+    const organization = await this.prisma.organization.findUnique({
       where: {
         clientId,
       },
@@ -41,7 +41,7 @@ export class PrismaOrganizationsRepository implements OrganizationsRepository {
   }
 
   async findById(id: string): Promise<Organization | null> {
-    const organization = await prisma.organization.findUnique({
+    const organization = await this.prisma.organization.findUnique({
       where: {
         id,
       },
@@ -55,7 +55,7 @@ export class PrismaOrganizationsRepository implements OrganizationsRepository {
   }
 
   async findByName(name: string): Promise<Organization | null> {
-    const organization = await prisma.organization.findFirst({
+    const organization = await this.prisma.organization.findFirst({
       where: {
         name,
       },

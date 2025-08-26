@@ -1,19 +1,19 @@
 import type { MembersRepository } from '@/domain/scheduling/application/repositories/members-respository'
 import type { Member } from '@/domain/scheduling/enterprise/entities/member'
-import { PrismaService } from '..'
+import type { PrismaService } from '..'
 import { PrismaMemberMapper } from '../mappers/prisma-member-mapper'
 
-const prisma = new PrismaService()
-
 export class PrismaMembersRepository implements MembersRepository {
+  constructor(private prisma: PrismaService) {}
+
   async create(member: Member): Promise<void> {
     const data = PrismaMemberMapper.toPrisma(member)
 
-    await prisma.member.create({ data })
+    await this.prisma.member.create({ data })
   }
 
   async findById(id: string): Promise<Member | null> {
-    const member = await prisma.member.findUnique({
+    const member = await this.prisma.member.findUnique({
       where: {
         id,
       },
@@ -30,7 +30,7 @@ export class PrismaMembersRepository implements MembersRepository {
     clientId: string,
     organizationId: string
   ): Promise<Member | null> {
-    const member = await prisma.member.findFirst({
+    const member = await this.prisma.member.findFirst({
       where: {
         clientId,
         organizationId,

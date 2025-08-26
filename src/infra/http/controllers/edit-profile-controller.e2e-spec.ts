@@ -5,7 +5,7 @@ import request from 'supertest'
 
 let prisma: PrismaService
 
-describe('Fetch client schedule history', () => {
+describe('Edit profile', () => {
   beforeAll(async () => {
     app.ready()
     prisma = new PrismaService()
@@ -15,7 +15,7 @@ describe('Fetch client schedule history', () => {
     app.close()
   })
 
-  it('[GET] /schedule/history - should be able to fetch client schedule history', async () => {
+  it('[PATCH] /edit - should be able to edit profile.', async () => {
     const client = {
       name: faker.person.fullName(),
       email: faker.internet.email(),

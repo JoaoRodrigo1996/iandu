@@ -5,24 +5,27 @@ import type { Prisma, Organization as PrismaOrganization } from '@prisma/client'
 // biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
 export class PrismaOrganizationMapper {
   static toDomain(raw: PrismaOrganization): Organization {
-    return Organization.create({
-      clientId: new UniqueEntityID(raw.clientId),
-      address: {
-        city: raw.city,
-        complement: raw.complement,
-        neighborhood: raw.neighborhood,
-        number: raw.number,
-        state: raw.state,
-        street: raw.street,
-        zip: raw.zip,
+    return Organization.create(
+      {
+        clientId: new UniqueEntityID(raw.clientId),
+        address: {
+          city: raw.city,
+          complement: raw.complement,
+          neighborhood: raw.neighborhood,
+          number: raw.number,
+          state: raw.state,
+          street: raw.street,
+          zip: raw.zip,
+        },
+        cnpj: raw.cnpj,
+        description: raw.description,
+        email: raw.email,
+        name: raw.name,
+        phone: raw.phone,
+        sector: raw.sector,
       },
-      cnpj: raw.cnpj,
-      description: raw.description,
-      email: raw.email,
-      name: raw.name,
-      phone: raw.phone,
-      sector: raw.sector,
-    })
+      new UniqueEntityID(raw.id)
+    )
   }
 
   static toPrisma(

@@ -1,3 +1,5 @@
+import type { PrismaService } from '@/infra/database/prisma'
+import { PrismaClientMapper } from '@/infra/database/prisma/mappers/prisma-client-mapper'
 import { faker } from '@faker-js/faker'
 import type { UniqueEntityID } from '../../src/core/entities/unique-entity-id'
 import {
@@ -21,4 +23,18 @@ export function makeClient(
   )
 
   return client
+}
+
+export class ClientFactory {
+  constructor(private prisma: PrismaService) {}
+
+  async makePrismaClient(data: Partial<ClientProps> = {}): Promise<Client> {
+    const client = makeClient(data)
+
+    await this.prisma.client.create({
+      data: PrismaClientMapper.toPrisma(client),
+    })
+
+    return client
+  }
 }

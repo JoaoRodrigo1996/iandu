@@ -2,6 +2,7 @@ import { ScheduleAlreadyExistsError } from '@/domain/scheduling/application/use-
 import { makeRegisterSchedulingFactory } from '@/infra/factories/make-register-scheduling-factory'
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
+import { SchedulePresenter } from '../presenters/schedule-presenter'
 
 const registerSchedulingBodySchema = z.object({
   date: z.string().transform((str, ctx) => {
@@ -49,6 +50,8 @@ export class RegisterSchedulingController {
       }
     }
 
-    return reply.status(200).send()
+    return reply
+      .status(201)
+      .send({ schedule: SchedulePresenter.toHTTP(result.value.schedule) })
   }
 }

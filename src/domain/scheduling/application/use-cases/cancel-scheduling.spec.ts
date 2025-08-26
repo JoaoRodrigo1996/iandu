@@ -53,7 +53,7 @@ describe('Cancel scheduling', () => {
     const newSchedule = makeScheduling(
       {
         clientId: new UniqueEntityID('client-01'),
-        date: new Date(Date.now() + 1000 * 60 * 30),
+        date: new Date(Date.now() + 1000 * 60 * 180),
       },
       new UniqueEntityID('schedule-01')
     )

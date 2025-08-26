@@ -55,7 +55,7 @@ export class CreateOrganizationController {
       }
     }
 
-    return reply.status(200).send({
+    return reply.status(201).send({
       organization: OrganizationPresenter.toHTTP(result.value.organization),
     })
   }

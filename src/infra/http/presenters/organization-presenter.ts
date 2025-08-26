@@ -4,7 +4,8 @@ import type { Organization } from '@/domain/scheduling/enterprise/entities/organ
 export class OrganizationPresenter {
   static toHTTP(organization: Organization) {
     return {
-      id: organization.id,
+      id: organization.id.toString(),
+      clientId: organization.clientId.toString(),
       name: organization.name,
       cnpj: organization.cnpj,
       address: {

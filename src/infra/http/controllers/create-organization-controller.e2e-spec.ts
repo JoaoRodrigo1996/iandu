@@ -58,6 +58,6 @@ describe('Create organization', () => {
         phone: '(99) 99999-9999',
       })
 
-    expect(response.statusCode).toEqual(200)
+    expect(response.statusCode).toEqual(201)
   })
 })

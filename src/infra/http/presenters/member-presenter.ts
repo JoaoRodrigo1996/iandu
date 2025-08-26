@@ -4,9 +4,9 @@ import type { Member } from '@/domain/scheduling/enterprise/entities/member'
 export class MemberPresenter {
   static toHTTP(member: Member) {
     return {
-      id: member.id,
-      clientId: member.clientId,
-      organizationId: member.organizationId,
+      id: member.id.toString(),
+      clientId: member.clientId.toString(),
+      organizationId: member.organizationId.toString(),
       role: member.role,
     }
   }

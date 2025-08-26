@@ -4,8 +4,9 @@ import type { Scheduling } from '@/domain/scheduling/enterprise/entities/schedul
 export class SchedulePresenter {
   static toHTTP(schedule: Scheduling) {
     return {
-      organizationId: schedule.organizationId,
-      clientId: schedule.clientId,
+      id: schedule.id.toString(),
+      organizationId: schedule.organizationId.toString(),
+      clientId: schedule.clientId.toString(),
       date: schedule.date,
     }
   }

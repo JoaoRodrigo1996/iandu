@@ -67,6 +67,6 @@ describe('Create schedule', () => {
         date: new Date('2022-01-01T13:00:00.000Z'),
       })
 
-    expect(response.statusCode).toBe(200)
+    expect(response.statusCode).toBe(201)
   })
 })

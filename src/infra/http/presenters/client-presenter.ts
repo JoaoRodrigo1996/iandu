@@ -4,6 +4,7 @@ import type { Client } from '@/domain/scheduling/enterprise/entities/client'
 export class ClientPresenter {
   static toHTTP(client: Client) {
     return {
+      id: client.id.toString(),
       userName: client.userName,
       email: client.email,
       name: client.name,

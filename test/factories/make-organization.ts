@@ -1,3 +1,5 @@
+import type { PrismaService } from '@/infra/database/prisma'
+import { PrismaOrganizationMapper } from '@/infra/database/prisma/mappers/prisma-organization-mapper'
 import { faker } from '@faker-js/faker'
 import { UniqueEntityID } from '../../src/core/entities/unique-entity-id'
 import {
@@ -33,4 +35,20 @@ export function makeOrganization(
   )
 
   return organization
+}
+
+export class OrganizationFactory {
+  constructor(private prisma: PrismaService) {}
+
+  async makePrismaOrganization(
+    data: Partial<OrganizationProps> = {}
+  ): Promise<Organization> {
+    const organization = makeOrganization(data)
+
+    await this.prisma.organization.create({
+      data: PrismaOrganizationMapper.toPrisma(organization),
+    })
+
+    return organization
+  }
 }
