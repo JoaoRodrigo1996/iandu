@@ -1,14 +1,19 @@
 import { app } from '@/infra/app'
+import { JwtEncrypter } from '@/infra/cryptography/jwt-encrypter'
 import { PrismaService } from '@/infra/database/prisma'
-import { hash } from 'bcrypt'
 import request from 'supertest'
+import { ClientFactory } from 'test/factories/make-client'
 
 let prisma: PrismaService
+let clientFactory: ClientFactory
+let jwtService: JwtEncrypter
 
 describe('Get client by username', () => {
   beforeAll(async () => {
     await app.ready()
     prisma = new PrismaService()
+    jwtService = new JwtEncrypter(app)
+    clientFactory = new ClientFactory(prisma)
   })
 
   afterAll(async () => {
@@ -16,25 +21,12 @@ describe('Get client by username', () => {
   })
 
   it('[GET] /me - should be able to get client by username', async () => {
-    await prisma.client.create({
-      data: {
-        name: 'John Doe',
-        email: 'johndoe@example.com',
-        userName: 'johndoe',
-        password: await hash('12345678', 8),
-      },
-    })
-
-    const authResponse = await request(app.server).post('/sessions').send({
-      email: 'johndoe@example.com',
-      password: '12345678',
-    })
-
-    const { access_token } = authResponse.body
+    const client = await clientFactory.makePrismaClient()
+    const access_token = await jwtService.encrypt({ sub: client.id.toString() })
 
     const response = await request(app.server)
       .get('/client')
-      .query({ username: 'johndoe' })
+      .query({ username: client.userName })
       .set('Authorization', `Bearer ${access_token}`)
       .send()
 
