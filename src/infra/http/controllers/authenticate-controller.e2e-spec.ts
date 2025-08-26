@@ -2,13 +2,16 @@ import { app } from '@/infra/app'
 import { PrismaService } from '@/infra/database/prisma'
 import { hash } from 'bcrypt'
 import request from 'supertest'
+import { ClientFactory } from 'test/factories/make-client'
 
 let prisma: PrismaService
+let clientFactory: ClientFactory
 
 describe('Authenticate account (E2E)', () => {
   beforeAll(async () => {
     await app.ready()
     prisma = new PrismaService()
+    clientFactory = new ClientFactory(prisma)
   })
 
   afterAll(async () => {
@@ -16,13 +19,9 @@ describe('Authenticate account (E2E)', () => {
   })
 
   it('[POST] /sessions - should authenticate an account', async () => {
-    await prisma.client.create({
-      data: {
-        name: 'John Doe',
-        email: 'johndoe@example.com',
-        userName: 'johndoe',
-        password: await hash('12345678', 8),
-      },
+    const client = await clientFactory.makePrismaClient({
+      email: 'johndoe@example.com',
+      password: await hash('12345678', 6),
     })
 
     const response = await request(app.server).post('/sessions').send({
