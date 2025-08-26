@@ -1,17 +1,23 @@
 import { app } from '@/infra/app'
 import { JwtEncrypter } from '@/infra/cryptography/jwt-encrypter'
 import { PrismaService } from '@/infra/database/prisma'
-import { faker } from '@faker-js/faker'
 import request from 'supertest'
+import { ClientFactory } from 'test/factories/make-client'
+import { MemberFactory } from 'test/factories/make-member'
+import { OrganizationFactory } from 'test/factories/make-organization'
 
 let prisma: PrismaService
 let jwtService: JwtEncrypter
+let clientFactory: ClientFactory
+let organizationFactory: OrganizationFactory
 
 describe('Create member', () => {
   beforeAll(async () => {
     await app.ready()
     prisma = new PrismaService()
     jwtService = new JwtEncrypter(app)
+    clientFactory = new ClientFactory(prisma)
+    organizationFactory = new OrganizationFactory(prisma)
   })
 
   afterAll(async () => {
@@ -19,48 +25,13 @@ describe('Create member', () => {
   })
 
   it('[POST] /member/:organizationId - should be able to create a new member', async () => {
-    const client = {
-      name: faker.person.fullName(),
-      email: faker.internet.email(),
-      userName: faker.internet.username(),
-    }
-
-    await request(app.server).post('/users').send({
-      name: client.name,
-      email: client.email,
-      userName: client.userName,
-      password: '12345678',
+    const client = await clientFactory.makePrismaClient()
+    const access_token = await jwtService.encrypt({ sub: client.id.toString() })
+    const organization = await organizationFactory.makePrismaOrganization({
+      clientId: client.id,
     })
 
-    const authResponse = await request(app.server).post('/sessions').send({
-      email: client.email,
-      password: '12345678',
-    })
-
-    const { access_token } = await authResponse.body
-
-    const organization = await request(app.server)
-      .post('/organization')
-      .set('Authorization', `Bearer ${access_token}`)
-      .send({
-        name: 'Amazon',
-        address: {
-          city: 'Miami',
-          complement: 'Apt 123',
-          neighborhood: 'Downtown',
-          number: 123,
-          state: 'FL',
-          street: 'Main St',
-          zip: '12345',
-        },
-        email: faker.internet.email(),
-        cnpj: `${faker.string.numeric(14)}`,
-        description: 'A organization description',
-        sector: 'Services',
-        phone: '(99) 99999-9999',
-      })
-
-    const organizationId = organization.body.organization.id.value
+    const organizationId = organization.id.toString()
 
     const response = await request(app.server)
       .post(`/member/${organizationId}`)

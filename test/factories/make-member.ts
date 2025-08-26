@@ -1,3 +1,5 @@
+import type { PrismaService } from '@/infra/database/prisma'
+import { PrismaMemberMapper } from '@/infra/database/prisma/mappers/prisma-member-mapper'
 import { faker } from '@faker-js/faker'
 import { UniqueEntityID } from '../../src/core/entities/unique-entity-id'
 import {
@@ -20,4 +22,18 @@ export function makeMember(
   )
 
   return member
+}
+
+export class MemberFactory {
+  constructor(private prisma: PrismaService) {}
+
+  async makePrismaMember(data: Partial<MemberProps> = {}): Promise<Member> {
+    const member = makeMember(data)
+
+    await this.prisma.member.create({
+      data: PrismaMemberMapper.toPrisma(member),
+    })
+
+    return member
+  }
 }
