@@ -2,7 +2,6 @@ import { type Either, right } from '@/core/either'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { Available } from '../../enterprise/entities/available'
 import type { AvailablesRepository } from '../repositories/availables-repository'
-
 interface AvailableRequest {
   organization_id: string
   week_day: number
@@ -11,7 +10,6 @@ interface AvailableRequest {
 }
 
 type AvailableResponse = Either<null, { available: Available }>
-
 export class AvailableUseCase {
   constructor(private availablesRepository: AvailablesRepository) {}
 
