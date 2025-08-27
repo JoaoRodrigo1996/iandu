@@ -88,8 +88,22 @@ model Organization {
   createdAt    DateTime @default(now()) @map("created_at")
   updatedAt    DateTime @updatedAt @map("updated_at")
 
-  Schedule Schedule[]
-  Member   Member[]
+  Schedule  Schedule[]
+  Member    Member[]
+  Available Available[]
 
   @@map("organizations")
+}
+
+model Available {
+  id                 String @id @default(uuid())
+  weekDay            Int    @map("week_day")
+  startTimeInMinutes Int    @map("start_time_in_minutes")
+  endTimeInMinutes   Int    @map("end_time_in_minutes")
+
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String       @map("organization_id")
+
+  @@index([organizationId])
+  @@map("availables")
 }
