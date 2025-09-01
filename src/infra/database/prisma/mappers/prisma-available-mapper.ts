@@ -1,6 +1,9 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { Available } from '@/domain/scheduling/enterprise/entities/available'
-import type { Prisma, Available as PrismaAvailable } from '@prisma/client'
+import type {
+  Prisma,
+  OrganizationAvailableTimes as PrismaAvailable,
+} from '@prisma/client'
 
 // biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
 export class PrismaAvailableMapper {
@@ -16,7 +19,9 @@ export class PrismaAvailableMapper {
     )
   }
 
-  static toPrisma(available: Available): Prisma.AvailableUncheckedCreateInput {
+  static toPrisma(
+    available: Available
+  ): Prisma.OrganizationAvailableTimesUncheckedCreateInput {
     return {
       id: available.id.toString(),
       weekDay: available.week_day,

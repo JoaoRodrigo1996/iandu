@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,67 +8,50 @@ datasource db {
 }
 
 model Client {
-  id        String   @id @default(uuid())
-  name      String
-  userName  String   @unique @map("user_name")
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
+  id           String        @id @default(uuid())
+  name         String
+  userName     String        @unique @map("user_name")
+  email        String        @unique
+  password     String
+  createdAt    DateTime      @default(now()) @map("created_at")
+  updatedAt    DateTime      @updatedAt @map("updated_at")
+  Member       Member[]
   Organization Organization?
   Schedule     Schedule[]
-  Member       Member[]
 
   @@map("clients")
 }
 
 model Schedule {
-  id String @id @default(uuid())
-
-  client   Client @relation(fields: [clientId], references: [id])
-  clientId String @map("client_id")
-
-  organization   Organization @relation(fields: [organizationId], references: [id])
+  id             String       @id @default(uuid())
+  clientId       String       @map("client_id")
   organizationId String       @map("organization_id")
-
-  date DateTime
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  date           DateTime
+  createdAt      DateTime     @default(now()) @map("created_at")
+  updatedAt      DateTime     @updatedAt @map("updated_at")
+  client         Client       @relation(fields: [clientId], references: [id])
+  organization   Organization @relation(fields: [organizationId], references: [id])
 
   @@map("schedules")
 }
 
-enum Role {
-  ADMIN
-  EMPLOYEE
-  MEMBER
-}
-
 model Member {
-  id String @id @default(uuid())
-
-  member   Client @relation(fields: [clientId], references: [id])
-  clientId String @map("client_id")
-
-  organization   Organization @relation(fields: [organizationId], references: [id])
+  id             String       @id @default(uuid())
+  clientId       String       @map("client_id")
   organizationId String       @map("organization_id")
-
-  role Role @default(MEMBER)
+  role           Role         @default(MEMBER)
+  member         Client       @relation(fields: [clientId], references: [id])
+  organization   Organization @relation(fields: [organizationId], references: [id])
 
   @@map("members")
 }
 
 model Organization {
-  id String @id @default(uuid())
-
-  ownerId  Client @relation(fields: [clientId], references: [id])
-  clientId String @unique @map("client_id")
-
+  id           String                       @id @default(uuid())
+  clientId     String                       @unique @map("client_id")
   name         String
   description  String
-  cnpj         String   @unique
+  cnpj         String                       @unique
   street       String
   number       Int
   complement   String
@@ -82,28 +59,33 @@ model Organization {
   city         String
   state        String
   zip          String
-  email        String   @unique
+  email        String                       @unique
   phone        String
   sector       String
-  createdAt    DateTime @default(now()) @map("created_at")
-  updatedAt    DateTime @updatedAt @map("updated_at")
-
-  Schedule  Schedule[]
-  Member    Member[]
-  Available Available[]
+  createdAt    DateTime                     @default(now()) @map("created_at")
+  updatedAt    DateTime                     @updatedAt @map("updated_at")
+  Member       Member[]
+  Available    OrganizationAvailableTimes[]
+  ownerId      Client                       @relation(fields: [clientId], references: [id])
+  Schedule     Schedule[]
 
   @@map("organizations")
 }
 
-model Available {
-  id                 String @id @default(uuid())
-  weekDay            Int    @map("week_day")
-  startTimeInMinutes Int    @map("start_time_in_minutes")
-  endTimeInMinutes   Int    @map("end_time_in_minutes")
-
-  organization   Organization @relation(fields: [organizationId], references: [id])
-  organizationId String       @map("organization_id")
+model OrganizationAvailableTimes {
+  id                 String       @id @default(uuid())
+  weekDay            Int          @map("week_day")
+  startTimeInMinutes Int          @map("start_time_in_minutes")
+  endTimeInMinutes   Int          @map("end_time_in_minutes")
+  organizationId     String       @map("organization_id")
+  organization       Organization @relation(fields: [organizationId], references: [id])
 
   @@index([organizationId])
-  @@map("availables")
+  @@map("organization_available_times")
+}
+
+enum Role {
+  ADMIN
+  EMPLOYEE
+  MEMBER
 }

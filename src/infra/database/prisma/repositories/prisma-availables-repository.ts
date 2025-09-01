@@ -9,6 +9,6 @@ export class PrismaAvailablesRepository implements AvailablesRepository {
   async create(available: Available): Promise<void> {
     const data = PrismaAvailableMapper.toPrisma(available)
 
-    await this.prisma.available.create({ data })
+    await this.prisma.organizationAvailableTimes.create({ data })
   }
 }

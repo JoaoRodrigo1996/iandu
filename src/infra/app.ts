@@ -3,6 +3,7 @@ import fastify from 'fastify'
 import { ZodError } from 'zod'
 import { env } from './env'
 import { accountRoutes } from './http/routes/account'
+import { availableRoutes } from './http/routes/available'
 import { memberRoutes } from './http/routes/member'
 import { organizationRoutes } from './http/routes/organization'
 import { scheduleRoutes } from './http/routes/schedule'
@@ -17,6 +18,7 @@ app.register(accountRoutes)
 app.register(scheduleRoutes)
 app.register(organizationRoutes)
 app.register(memberRoutes)
+app.register(availableRoutes)
 
 app.setErrorHandler((error, _, reply) => {
   if (error instanceof ZodError) {

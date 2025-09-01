@@ -1,9 +1,9 @@
-version: '3.9'
+version: "3.9"
 
 services:
   postgres:
     image: bitnami/postgresql:latest
-    ports: 
+    ports:
       - "5432:5432"
     container_name: iandu
     environment:
@@ -11,4 +11,4 @@ services:
       POSTGRES_PASSWORD: iandu
       POSTGRES_DB: iandu-db
     volumes:
-      - ./data/pg:/data/postgres
+      - ./data/pg:/data/postgres-iandu-db
