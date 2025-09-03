@@ -30,7 +30,11 @@
   },
   "dependencies": {
     "@fastify/jwt": "^9.1.0",
+    "@opentelemetry/api": "^1.9.0",
+    "@opentelemetry/instrumentation-http": "^0.203.0",
+    "@opentelemetry/sdk-node": "^0.203.0",
     "@prisma/client": "6.12.0",
+    "@prisma/instrumentation": "^6.15.0",
     "bcrypt": "^5.1.1",
     "dayjs": "^1.11.13",
     "dotenv": "^16.5.0",
