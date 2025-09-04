@@ -1,3 +1,6 @@
+import { initializeTracing } from './tracing'
+await initializeTracing()
+
 import jwt from '@fastify/jwt'
 import fastify from 'fastify'
 import { ZodError } from 'zod'
