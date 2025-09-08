@@ -1,3 +1,4 @@
+import type { PaginationParams } from '@/core/repositories/pagination-params'
 import type { Organization } from '../../enterprise/entities/organization'
 
 export abstract class OrganizationsRepository {
@@ -6,4 +7,5 @@ export abstract class OrganizationsRepository {
   abstract findByClientId(clientId: string): Promise<Organization | null>
   abstract findById(id: string): Promise<Organization | null>
   abstract findByName(name: string): Promise<Organization | null>
+  abstract findMany(params: PaginationParams): Promise<Organization[]>
 }

@@ -1,3 +1,4 @@
+import type { PaginationParams } from '@/core/repositories/pagination-params'
 import type { Organization } from '@/domain/scheduling/enterprise/entities/organization'
 import type { OrganizationsRepository } from '../../src/domain/scheduling/application/repositories/organizations-repository'
 
@@ -32,6 +33,15 @@ export class InMemoryOrganizationsRepository
     }
 
     return organization
+  }
+
+  async findMany(params: PaginationParams): Promise<Organization[]> {
+    const organizations = this.items.slice(
+      (params.page - 1) * 20,
+      params.page * 20
+    )
+
+    return organizations
   }
 
   async findById(id: string): Promise<Organization | null> {
