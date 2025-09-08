@@ -1,3 +1,4 @@
+import type { PaginationParams } from '@/core/repositories/pagination-params'
 import type { OrganizationsRepository } from '@/domain/scheduling/application/repositories/organizations-repository'
 import type { Organization } from '@/domain/scheduling/enterprise/entities/organization'
 import type { PrismaService } from '..'
@@ -24,6 +25,15 @@ export class PrismaOrganizationsRepository implements OrganizationsRepository {
     }
 
     return PrismaOrganizationMapper.toDomain(organization)
+  }
+
+  async findMany(params: PaginationParams): Promise<Organization[]> {
+    const organizations = await this.prisma.organization.findMany({
+      skip: (params.page - 1) * 20,
+      take: 20,
+    })
+
+    return organizations.map(PrismaOrganizationMapper.toDomain)
   }
 
   async findByClientId(clientId: string): Promise<Organization | null> {
