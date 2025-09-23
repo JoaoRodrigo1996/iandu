@@ -1,6 +1,8 @@
+import { AggregateRoot } from '@/core/entities/aggregate-root'
 import type { Optional } from '@/core/types/optional'
 import { Entity } from '../../../../core/entities/entity'
 import type { UniqueEntityID } from '../../../../core/entities/unique-entity-id'
+import { ScheduleCreatedEvent } from '../events/schedule-created-event'
 
 export interface SchedulingProps {
   organizationId: UniqueEntityID
@@ -11,7 +13,7 @@ export interface SchedulingProps {
   updatedAt?: Date
 }
 
-export class Scheduling extends Entity<SchedulingProps> {
+export class Scheduling extends AggregateRoot<SchedulingProps> {
   get organizationId() {
     return this.props.organizationId
   }
@@ -44,6 +46,12 @@ export class Scheduling extends Entity<SchedulingProps> {
       },
       id
     )
+
+    const newSchedule = !id
+
+    if (newSchedule) {
+      scheduling.addDomainEvent(new ScheduleCreatedEvent(scheduling))
+    }
 
     return scheduling
   }

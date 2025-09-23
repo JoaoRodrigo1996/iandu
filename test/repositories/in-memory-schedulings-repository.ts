@@ -1,3 +1,4 @@
+import { DomainEvents } from '@/core/events/domain-events'
 import type { SchedulingsRepository } from '@/domain/scheduling/application/repositories/schedulingsRepository'
 import type { Scheduling } from '@/domain/scheduling/enterprise/entities/scheduling'
 
@@ -6,6 +7,8 @@ export class InMemorySchedulingsRepository implements SchedulingsRepository {
 
   async create(agenda: Scheduling): Promise<void> {
     this.items.push(agenda)
+
+    DomainEvents.dispatchEventsForAggregate(agenda.id)
   }
 
   async findById(id: string): Promise<Scheduling | null> {
@@ -40,7 +43,10 @@ export class InMemorySchedulingsRepository implements SchedulingsRepository {
     date: Date
   ): Promise<Scheduling | null> {
     const schedule = this.items.find(
-      item => item.clientId.toString() === clientId && item.organizationId.toString() === organizationId && item.date === date
+      item =>
+        item.clientId.toString() === clientId &&
+        item.organizationId.toString() === organizationId &&
+        item.date === date
     )
 
     if (!schedule) {

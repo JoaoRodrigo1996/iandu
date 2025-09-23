@@ -26,6 +26,11 @@
 			},
 			"suspicious": {
 				"noArrayIndexKey": "info"
+			},
+			"complexity": {
+				"noStaticOnlyClass": "off",
+				"noThisInStatic": "off",
+				"noForEach": "off"
 			}
 		}
 	},
